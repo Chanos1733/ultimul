@@ -100,31 +100,31 @@
                 </a>
             </div>
             &nbsp;&nbsp;
-            <div class="card-deck mb-3 text-center" style="max-width: 300px; min-width: 250px;" th:each="x : ${product}" > <!--   -->
+            <div class="card-deck mb-3 text-center" style="max-width: 300px; min-width: 250px;"  >
 
-                <div class="card mb-4 shadow-sm"
-                     style="max-width: 300px; min-width: 250px; float: left; background-color: #A0E0FF; border-radius: 23px;">
+                <div th:each="x : ${product}" class="card mb-4 shadow-sm"
+                     style="max-width: 300px; min-width: 250px; float: left; background-color: #A0E0FF; border-radius: 23px;"> <!--   -->
                     <div class="card-header">
-                        <h4 class="my-0 font-weight-normal"><img th:src="${x.photo1}"
+                        <img th:src="${x.photo1}"
                                                                  style=" max-width: 200px; max-height: 200px;">
                             <!--   -->
-                        </h4>
+
                     </div>
                     <div class="card-body">
                         <h3 class="my-0 font-weight-normal" th:text="${x.name}"><!--    --> </h3>
                         <h1 class="card-title pricing-card-title"><span th:text="${x.price}"></span> RON</h1>
                         <a href="Product.html">
-                            <input name="productId" hidden th:value="${product.id}"> <!--  -->
+                            <input name="productId" hidden th:value="${x.id}"> <!--  -->
                             <button type="button" class="btn btn-dark"
                                     style="border-radius: 15px; font-size: 14px; float: left;width: -webkit-fill-available;">
                                 detalii
                             </button>
                         </a>
-                        <form action="/add-to-cart" method="post">
-                            <input name="productId" th:value="${product.id}" hidden><!--  -->
+                        <form action="/add-to-cart" method="post" >
+                            <input name="productId" th:value="${x.id}" hidden><!--  -->
                             <button type="button" class="btn btn-dark"
-                                    style="border-radius: 15px; font-size: 14px; float: left;width: -webkit-fill-available;">
-                                Adauga in coș
+                                    style="border-radius: 15px; font-size: 14px; float: left;width: -webkit-fill-available;" ><a>
+                                Adauga in coș</a>
                             </button>
                         </form>
 

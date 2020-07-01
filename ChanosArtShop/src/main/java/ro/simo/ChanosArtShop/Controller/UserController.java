@@ -81,26 +81,22 @@ public class UserController {
                 modelAndView.addObject("message", "Credentialele nu sunt corecte!");
             } else { //a introdus credentialele cu succes
                 userSession.setUserId(userFromDatabase.getId());
-                modelAndView = new ModelAndView("redirect:/Home");
+                modelAndView = new ModelAndView("redirect:/dashboard");
             }
         }
         return modelAndView;
     }
 
-    @GetMapping("/Home") // la fiecare pagina trebuie facuta verificarea, pengtru a afisa istoric sau login :D
+    @GetMapping("/dashboard") // la fiecare pagina trebuie facuta verificarea, pengtru a afisa istoric sau login :D
     public ModelAndView home() {
 
         List<Product> products = productDAO.findAll();
 
 
         ModelAndView modelAndView = new ModelAndView("dashboard");
-        modelAndView.addObject("products", products);
-
-        return modelAndView;
+        modelAndView.addObject("product", products);
 
 
-        /*List<Product> products = productDAO.findAll();
-        ModelAndView modelAndView = new ModelAndView("/Home");
         //verific daca utilizatorul este logat sau nu
         if (userSession.getUserId() == 0) {
             modelAndView.addObject("cart", "Login");
@@ -110,7 +106,7 @@ public class UserController {
 
         modelAndView.addObject("product", products);
 
-        return modelAndView; */
+        return modelAndView;
     }
 
     @GetMapping("/back-to-login")
