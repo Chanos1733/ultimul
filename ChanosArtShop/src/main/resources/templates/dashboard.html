@@ -44,14 +44,15 @@
 <div class="nav ">
     <div style="height: 10%;">
         <div class="topnav fixed-top">
-            <form action="/back-to-login"><a type="submit" href="">Coș de cumpărături</a></form>
-            <form action="/back-to-login"><a href=""><span th:text="${cart}"></span></a></form>
+            <a type="submit" href="">Coș de cumpărături</a>
+            <a href="/back-to-login"><span th:text="${cart}"></span></a>
             <!--daca e logat, cos, daca nu, login-->
             <a href="Contact.html">Contact</a>
             <a href="About.html">Despre</a>
             <a href="/Home">Acasă</a>
             <img class="mr-sm-4" src="img/Imagini/Doar-flori.png" style="padding-left: 5px; padding-top: 2px; ">
-            <input type="text" placeholder="Search" aria-label="Search" style="width: 200px; border-radius: 7px;">
+            <input type="text" placeholder="Search" aria-label="Search"
+                   style="width: 200px; border-radius: 7px;">
             <button class="btn btn-outline-white btn-sm my-0" type="submit" style="border-radius: 7px;"><i
                     class="fas fa-search"></i></button>
         </div>
@@ -100,34 +101,39 @@
                 </a>
             </div>
             &nbsp;&nbsp;
-            <div class="card-deck mb-3 text-center" style="max-width: 300px; min-width: 250px;"  >
+            <div style="width: 100%;">
+                <div class="card-deck mb-3 text-center"
+                     style="max-width: 300px; min-width: 250px; flex-flow: nowrap !important;">
 
-                <div th:each="x : ${product}" class="card mb-4 shadow-sm"
-                     style="max-width: 300px; min-width: 250px; float: left; background-color: #A0E0FF; border-radius: 23px;"> <!--   -->
-                    <div class="card-header">
-                        <img th:src="${x.photo1}"
-                                                                 style=" max-width: 200px; max-height: 200px;">
+                    <div th:each="x : ${product}" class="card mb-4 shadow-sm"
+                         style="max-width: 300px; min-width: 250px; float: left; background-color: #A0E0FF; border-radius: 23px;">
+                        <!--   -->
+                        <div class="card-header">
+                            <img th:src="${x.photo1}"
+                                 style=" max-width: 200px; max-height: 200px;">
                             <!--   -->
 
-                    </div>
-                    <div class="card-body">
-                        <h3 class="my-0 font-weight-normal" th:text="${x.name}"><!--    --> </h3>
-                        <h1 class="card-title pricing-card-title"><span th:text="${x.price}"></span> RON</h1>
-                        <a href="Product.html">
-                            <input name="productId" hidden th:value="${x.id}"> <!--  -->
-                            <button type="button" class="btn btn-dark"
-                                    style="border-radius: 15px; font-size: 14px; float: left;width: -webkit-fill-available;">
-                                detalii
-                            </button>
-                        </a>
-                        <form action="/add-to-cart" method="post" >
-                            <input name="productId" th:value="${x.id}" hidden><!--  -->
-                            <button type="button" class="btn btn-dark"
-                                    style="border-radius: 15px; font-size: 14px; float: left;width: -webkit-fill-available;" ><a>
-                                Adauga in coș</a>
-                            </button>
-                        </form>
+                        </div>
+                        <div class="card-body">
+                            <h3 class="my-0 font-weight-normal" th:text="${x.name}"><!--    --> </h3>
+                            <h1 class="card-title pricing-card-title"><span th:text="${x.price}"></span> RON</h1>
+                            <a href="Product.html">
+                                <input name="productId" hidden th:value="${x.id}"> <!--  -->
+                                <button type="button" class="btn btn-dark"
+                                        style="border-radius: 15px; font-size: 14px; float: left;width: -webkit-fill-available;">
+                                    detalii
+                                </button>
+                            </a>
+                            <form action="/add-to-cart" method="post">
+                                <input name="productId" th:value="${x.id}" hidden><!--  -->
+                                <button type="button" class="btn btn-dark"
+                                        style="border-radius: 15px; font-size: 14px; float: left;width: -webkit-fill-available;">
+                                    <a>
+                                        Adauga in coș</a>
+                                </button>
+                            </form>
 
+                        </div>
                     </div>
                 </div>
             </div>
