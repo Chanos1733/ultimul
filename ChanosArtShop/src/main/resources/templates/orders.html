@@ -1,0 +1,125 @@
+<!doctype html>
+<html style="height: -webkit-fill-available;">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Istoric comenzi</title>
+
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.css">
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <!-- CHANOS ART icon -->
+    <link rel="icon" href="img/Imagini/Doar-flori-pagina-sus.png" type="image/x-icon">
+
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+    <!-- Google Fonts Roboto -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+    <!-- Material Design Bootstrap -->
+    <link rel="stylesheet" href="css/mdb.min.css">
+    <!-- Your custom styles (optional) -->
+    <link rel="stylesheet" href="css/style.css">
+    <!-- pentru font awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link href="css/gradient buttons .css" rel="stylesheet" type="text/css">
+    <link href="css/parti componente header.css" rel="stylesheet" type="text/css">
+	<link href="css/CSS trebuie LOGIN.css" rel="stylesheet" type="text/css">
+	
+</head>
+<body style="font-family: 'Patrick Hand', cursive; background-image: linear-gradient(#184530 25%, #49ab6b 100%); height: -web-max-fit;background-repeat: no-repeat;">
+
+
+<div class="nav ">
+    <div style="height: 10%;">
+        <div class="topnav fixed-top">
+            <a href="Cart.html">Cos de cumparaturi</a>
+            <a href="Orders.html"><span th:text="${cart}"></span></a><!--daca e logat, cos, daca nu, login-->
+            <a href="Contact.html">Contact</a>
+            <a href="About.html">Despre</a>
+            <a href="Home.html">Acasă</a>
+            <img class="mr-sm-4" src="img/Imagini/Doar-flori.png" style="padding-left: 5px; padding-top: 2px; ">
+            <input type="text" placeholder="Search" aria-label="Search" style="width: 200px; border-radius: 7px;">
+            <button class="btn btn-outline-white btn-sm my-0" type="submit" style="border-radius: 7px;"><i
+                    class="fas fa-search"></i></button>
+        </div>
+    </div>
+</div>
+
+<div style="padding-top: 56px; ">
+    <div class="leftside">
+        <div><p></p></div>
+    </div>
+    <div class="centerside">
+
+
+        <div class="shop-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center" style=" margin: auto;">
+            <h2 class="display-4" style="color:  #e6d2ff;">Istoric de comenzi</h2>
+        </div>
+        <div class="container" style="">
+
+            <div th:each="x : ${orders}" class="card mb-4 shadow-sm">
+
+                <div class="card-header" style="background-color: burlywood;">
+                    <h4 class="my-0 font-weight-normal">Comanda cu numărul #<span th:text="${x.id}"></span></h4>
+                </div>
+                <div class="card-body">
+                    <h1 class="card-title pricing-card-title">Prețul total al comenzii: <span
+                            th:text="${x.price}"></span> RON</h1>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex justify-content-between align-items-center"><span th:text="${x.prodname}">Numele produselor</span>
+                            <span th:text="${x.quantity}" class="badge-primary badge-pill"
+                                  style="background-color: #27733dd1;"> cate au fost</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+			
+        </div>
+
+
+    </div>
+    <div class="rightside"><p></p></div>
+
+    <div class="bottomside">
+        <h4 style="padding-left: 45%; padding-top: 20px;">© Chanos Art 2020 </h4>
+    </div>
+</div>
+
+<div class="fixed-right" style="position: fixed;">
+
+    <!--Facebook-->
+    <div style=" width: 100%;"><a class="gradient-button gradient-button-1" style="float: left; width: 60px; "
+                                  href="https://www.facebook.com/Chanos-Art-103467424596978/"><i
+            class="fab fa-facebook-f" style="color: white"></i></a></div>
+
+    <!--Instagram-->
+    <div style=" width: 100%;"><a class="gradient-button gradient-button-2" style="float: left; width: 60px; "
+                                  href="https://www.instagram.com/chanos.art/"><i
+            class="fab fa-instagram" style="color: white"></i></a></div>
+
+    <!--Youtube-->
+    <div style=" width: 100%;"><a class="gradient-button gradient-button-3" style="float: left; width: 60px; "
+                                  href="https://www.youtube.com/channel/UCw6aT8okk_Ks__O1ZeSKTag"><i
+            class="fab fa-youtube"></i></a></div>
+
+    <!--Etsy-->
+    <div style=" width: 100%;"><a class="gradient-button gradient-button-4" style="float: left; width: 60px; "
+                                  href="https://www.etsy.com/shop/ChanosArt"><i class="fab fa-etsy"></i></a></div>
+
+</div>
+
+</body>
+</html>

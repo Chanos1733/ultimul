@@ -1,0 +1,127 @@
+<!doctype html>
+<html style="height: -webkit-fill-available;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Register</title>
+
+    <!-- bootstrap??-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <!-- CHANOS ART icon -->
+    <link rel="icon" href="img/Imagini/Doar-flori-pagina-sus.png" type="image/x-icon">
+    <!--font-->
+    <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+    <!-- Google Fonts Roboto -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <!-- Material Design Bootstrap -->
+    <link rel="stylesheet" href="css/mdb.min.css">
+    <!-- Your custom styles (optional) -->
+    <link rel="stylesheet" href="css/style.css">
+
+
+    <link href="css/gradient buttons .css" rel="stylesheet" type="text/css">
+    <link href="css/parti componente header.css" rel="stylesheet" type="text/css">
+    <link href="css/CSS trebuie LOGIN.css" rel="stylesheet" type="text/css">
+</head>
+
+<body class="text-center"
+      style=" font-family: 'Patrick Hand', cursive;  background-image: linear-gradient(#184530 25%, #49ab6b 100%); height: -web-max-fit;background-repeat: no-repeat;">
+<div>
+    <form action="/register-form" method="post" class="form-signin"
+          style="width: 800px; margin: auto; height: 70vh; padding-top: 5%;">
+        <div class="card-body" style="background-color: #a6e6b6; border-radius: 10px;">
+            <div class="flex-center flex-column">
+                <div>
+                    <div style="float: left; width: 50%;">
+                        <img class="mb-4" src="img/Imagini/Logo_mic.png" alt="" style="width: 200px;">
+
+                        <div class="form-label-group"
+                             style="margin-bottom: 1rem; margin-left: 35px; margin-right: 35px; width: 300px;">
+                            <input name="name" class="form-control">
+                            <label>Nume și prenume*</label>
+                        </div>
+                        <div class="form-label-group"
+                             style="margin-bottom: 1rem; margin-left: 35px; margin-right: 35px; width: 300px;">
+                            <input name="country" class="form-control">
+                            <label>Țară*</label>
+                        </div>
+                        <div class="form-label-group"
+                             style="margin-bottom: 1rem; margin-left: 35px; margin-right: 35px; width: 300px;">
+                            <input name="city" class="form-control" placeholder="">
+                            <label>Oraș*</label>
+                        </div>
+                        <div class="form-label-group"
+                             style="margin-bottom: 1rem; margin-left: 35px; margin-right: 35px; width: 300px;">
+                            <input name="adress" class="form-control" placeholder="">
+                            <label>Adresă*</label>
+                        </div>
+
+                    </div>
+                    <div style="float: left; width: 50%;">
+                        <h5 class="card-title text-center" style="font-size: -webkit-xxx-large; padding-bottom: 4px;">
+                            Înregistrare</h5>
+                        <div class="form-label-group"
+                             style="margin-bottom: 1rem; margin-left: 35px; margin-right: 35px; width: 300px;">
+                            <input name="phone" class="form-control" placeholder="">
+                            <label>Numărul de telefon*</label>
+                        </div>
+
+                        <div class="form-label-group"
+                             style="margin-bottom: 1rem; margin-left: 35px; margin-right: 35px; width: 300px;">
+                            <input name="email" type="email" id="inputEmail" class="form-control">
+                            <label for="inputEmail">Adresa de E-mail*</label>
+                        </div>
+
+                        <div class="form-label-group"
+                             style="margin-bottom: 1rem; margin-left: 35px; margin-right: 35px; width: 300px;">
+                            <input name="password" type="password" id="inputPassword" class="form-control">
+                            <label>Parola*</label>
+                        </div>
+
+                        <div class="form-label-group"
+                             style="margin-bottom: 1rem; margin-left: 35px; margin-right: 35px; width: 300px;">
+                            <input name="password-again" type="password" id="inputPassword2" class="form-control">
+                            <label for="inputPassword">Repetă Parola*</label>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="custom-control custom-checkbox mb-3">
+                    <input type="checkbox" class="custom-control-input" id="customCheck1" required>
+                    <label class="custom-control-label" for="customCheck1">Sunt de acord cu </label> <a
+                        href="Terms.html"> Termenii si condițiile </a>
+                </div>
+
+
+                <p th:text="${message}" style="color: #c50013;"></p> <!--email invalid sau nu e de acord cu termenii-->
+
+                <button type="submit" class="btn btn-dark"
+                        style="border-radius: 15px; font-size: 14px; float: left;width: -web-max-fit;">
+                    Înregistrare
+                </button>
+            </div>
+        </div>
+    </form>
+    <div>
+        <form action="/back-to-login">
+            <button type="submit" class="btn btn-dark"
+                    style="border-radius: 15px; font-size: 14px; width: 400px; margin-top: 70px;
+    bottom: 0;">Înapoi
+            </button>
+        </form>
+    </div>
+</div>
+
+
+<div class="bottomside">
+    <h4 style="margin:auto; padding-top: 20px; ">© Chanos Art 2020 </h4>
+</div>
+
+</body>
+</html>
