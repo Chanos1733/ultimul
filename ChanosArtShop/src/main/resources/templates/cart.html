@@ -13,7 +13,8 @@
     <link rel="stylesheet" type="text/css"
           href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.css">
     <script type="text/javascript"
-            src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script> <!-- CHANOS ART icon -->
+            src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!-- CHANOS ART icon -->
     <link rel="icon" href="img/Imagini/Doar-flori-pagina-sus.png" type="image/x-icon">
 
 
@@ -30,8 +31,8 @@
 
     <link href="css/gradient buttons .css" rel="stylesheet" type="text/css">
     <link href="css/parti componente header.css" rel="stylesheet" type="text/css">
-	<link href="css/CSS trebuie LOGIN.css" rel="stylesheet" type="text/css">
-	
+    <link href="css/CSS trebuie LOGIN.css" rel="stylesheet" type="text/css">
+
 </head>
 <body style="font-family: 'Patrick Hand', cursive; background-image: linear-gradient(#184530 25%, #49ab6b 100%); height: -web-max-fit;background-repeat: no-repeat;">
 
@@ -39,11 +40,11 @@
 <div class="nav ">
     <div style="height: 10%;">
         <div class="topnav fixed-top">
-            <a href="Cart.html" class="active">Coș de cumpărături</a>
-            <a href="Orders.html"><span th:text="${cart}"></span></a><!--daca e logat, cos, daca nu, login-->
-            <a href="Contact.html">Contact</a>
-            <a href="About.html">Despre</a>
-            <a href="Home.html">Acasă</a>
+            <a href="cart" class="active">Cos de cumparaturi</a>
+            <a href="orders"><span th:text="${history}"></span></a><!--daca e logat, cos, daca nu, login-->
+            <a href="Contact">Contact</a>
+            <a href="About">Despre</a>
+            <a href="dashboard">Acasă</a>
             <img class="mr-sm-4" src="img/Imagini/Doar-flori.png" style="padding-left: 5px; padding-top: 2px; ">
             <input type="text" placeholder="Search" aria-label="Search" style="width: 200px; border-radius: 7px;">
             <button class="btn btn-outline-white btn-sm my-0" type="submit" style="border-radius: 7px;"><i
@@ -51,6 +52,7 @@
         </div>
     </div>
 </div>
+
 
 <div style="padding-top: 56px; ">
     <div class="leftside">
@@ -67,25 +69,31 @@
             <div th:each="x : ${products}" class="card mb-4 shadow-sm" style=" border-radius: 10px;">
 
                 <div class="card-header" style="background-color: burlywood;">
-                     <h1 class="card-title pricing-card-title">Prețul total al comenzii: <span
+                    <h1 class="card-title pricing-card-title">Prețul: <span
                             th:text="${x.price}">12</span> RON</h1>
                 </div>
                 <div class="card-body">
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item d-flex justify-content-between align-items-center" ><img th:src="${x.photo1}" style="height: 50px;"><img th:src="${x.photo2}" style="height: 50px;"><img th:src="${x.photo3}" style="height: 50px;"><span th:text="${x.name}"></span>
+                        <li class="list-group-item d-flex justify-content-between align-items-center"><img
+                                th:src="${x.photo1}" style="height: 50px;">&nbsp;<img th:src="${x.photo2}" style="height: 50px;">&nbsp;<img
+                                th:src="${x.photo3}" style="height: 50px;">&nbsp;&nbsp;&nbsp;<span
+                                style="font-size: x-large;" th:text="${x.name}"></span>
                         </li>
-						<div>
-                        <input class="item-quantity qty k-valid" type="number" name="Quantity" placeholder="123">
-                        <a><small>Actualizează</small></a>
-                        
-                    </div>
+                        <div>
+                            <a href="/product"><small>Actualizează</small></a>
+                            <input class="item-quantity qty k-valid" type="number" style="width: 50px;" name="Quantity"
+                                   th:value="${x.quantity}">&nbsp;
+                        </div>
                     </ul>
                 </div>
             </div>
 
         </div>
-
-
+        <a href="/save-cart">
+            <button type="button" class="btn btn-dark"
+                    style="border-radius: 15px; font-size: 17px; ">Trimite comanda
+            </button>
+        </a>
     </div>
     <div class="rightside"><p></p></div>
 

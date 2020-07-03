@@ -1,15 +1,20 @@
 package ro.simo.ChanosArtShop.Controller;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import ro.simo.ChanosArtShop.Database.*;
 import ro.simo.ChanosArtShop.Security.UserSession;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.FileOutputStream;
 import java.util.List;
 
 @Controller
@@ -54,12 +59,11 @@ public class UserController {
         }
 
         //redirect user catre login
-        return new ModelAndView("index");
+        return new ModelAndView("redirect:/index.html");
     }
 
     @GetMapping("/register")
     public ModelAndView register() {
-        String message;
         return new ModelAndView("register");
     }
 
@@ -77,7 +81,7 @@ public class UserController {
         }
         if (userList.size() == 1) {
             User userFromDatabase = userList.get(0);
-            if (!userFromDatabase.getPassword().equals(password)) {
+            if (!userFromDatabase.getPassword().equals(DigestUtils.md5Hex(password))) {
                 modelAndView.addObject("message", "Credentialele nu sunt corecte!");
             } else { //a introdus credentialele cu succes
                 userSession.setUserId(userFromDatabase.getId());
@@ -92,16 +96,17 @@ public class UserController {
 
         List<Product> products = productDAO.findAll();
 
-
         ModelAndView modelAndView = new ModelAndView("dashboard");
-        modelAndView.addObject("product", products);
-
 
         //verific daca utilizatorul este logat sau nu
         if (userSession.getUserId() == 0) {
-            modelAndView.addObject("cart", "Login");
+            modelAndView.addObject("history", "Login");
         } else {
-            modelAndView.addObject("cart", "Istoric comenzi");
+            modelAndView.addObject("history", "Istoric comenzi");
+        }
+
+        for (Product p : products) {
+            p.setUrl("product?id=" + p.getId());
         }
 
         modelAndView.addObject("product", products);
@@ -113,4 +118,21 @@ public class UserController {
     public ModelAndView back() {
         return new ModelAndView("/index");
     }
+
+    @GetMapping("/ordersHistory")
+    public ModelAndView ordersHistory(@RequestParam("email") String email) {
+        return new ModelAndView ("/orders");
+    }
+
+    @GetMapping("/about")
+    public ModelAndView about() {
+        return new ModelAndView("redirect:/About.html");
+    }
+
+    @GetMapping("/contact")
+    public ModelAndView contact() {
+        return new ModelAndView("redirect:/Contact.html");
+    }
+
+
 }

@@ -44,20 +44,19 @@
 <div class="nav ">
     <div style="height: 10%;">
         <div class="topnav fixed-top">
-            <a type="submit" href="">Coș de cumpărături</a>
-            <a href="/back-to-login"><span th:text="${cart}"></span></a>
-            <!--daca e logat, cos, daca nu, login-->
-            <a href="Contact.html">Contact</a>
-            <a href="About.html">Despre</a>
-            <a href="/Home">Acasă</a>
+            <a href="cart">Cos de cumparaturi</a>
+            <a href="orders"><span th:text="${history}"></span></a><!--daca e logat, cos, daca nu, login-->
+            <a href="Contact">Contact</a>
+            <a href="About">Despre</a>
+            <a href="dashboard" class="active">Acasă</a>
             <img class="mr-sm-4" src="img/Imagini/Doar-flori.png" style="padding-left: 5px; padding-top: 2px; ">
-            <input type="text" placeholder="Search" aria-label="Search"
-                   style="width: 200px; border-radius: 7px;">
+            <input type="text" placeholder="Search" aria-label="Search" style="width: 200px; border-radius: 7px;">
             <button class="btn btn-outline-white btn-sm my-0" type="submit" style="border-radius: 7px;"><i
                     class="fas fa-search"></i></button>
         </div>
     </div>
 </div>
+
 <div style="padding-top: 56px; ">
     <div class="leftside">
         <div><p></p></div>
@@ -65,7 +64,7 @@
     <div class="centerside">
 
         <div>
-
+            <!--poze pentru carusel-->
             <div id="myCarousel" class="carousel slide" data-ride="carousel"
                  style="height: 350px;width: fit-content; margin: auto;">
                 <!-- Indicators -->
@@ -117,16 +116,17 @@
                         <div class="card-body">
                             <h3 class="my-0 font-weight-normal" th:text="${x.name}"><!--    --> </h3>
                             <h1 class="card-title pricing-card-title"><span th:text="${x.price}"></span> RON</h1>
-                            <a href="Product.html">
-                                <input name="productId" hidden th:value="${x.id}"> <!--  -->
-                                <button type="button" class="btn btn-dark"
+                            <form action="product" method="get">
+                                <input name="productId" th:value="${x.id}" hidden><!--  -->
+                                <button class="btn btn-dark"
                                         style="border-radius: 15px; font-size: 14px; float: left;width: -webkit-fill-available;">
-                                    detalii
+                                    <a th:href="${x.url}">
+                                        Detalii</a>
                                 </button>
-                            </a>
+                            </form>
                             <form action="/add-to-cart" method="post">
                                 <input name="productId" th:value="${x.id}" hidden><!--  -->
-                                <button type="button" class="btn btn-dark"
+                                <button type="submit" class="btn btn-dark"
                                         style="border-radius: 15px; font-size: 14px; float: left;width: -webkit-fill-available;">
                                     <a>
                                         Adauga in coș</a>

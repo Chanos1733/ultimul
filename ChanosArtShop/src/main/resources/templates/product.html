@@ -36,7 +36,7 @@
 
     <link href="css/gradient buttons .css" rel="stylesheet" type="text/css">
     <link href="css/parti componente header.css" rel="stylesheet" type="text/css">
-	<link href="css/CSS trebuie LOGIN.css" rel="stylesheet" type="text/css">
+    <link href="css/CSS trebuie LOGIN.css" rel="stylesheet" type="text/css">
 
 </head>
 <body style="font-family: 'Patrick Hand', cursive; background-image: linear-gradient(#184530 25%, #49ab6b 100%); min-height: -webkit-fill-available;background-repeat: no-repeat;">
@@ -45,11 +45,11 @@
 <div class="nav ">
     <div style="height: 10%;">
         <div class="topnav fixed-top">
-            <a href="Cart.html">Cos de cumparaturi</a>
-            <a href="Orders.html"><span th:text="${cart}"></span></a><!--daca e logat, cos, daca nu, login-->
-            <a href="Contact.html">Contact</a>
-            <a href="About.html">Despre</a>
-            <a href="Home.html">Acasă</a>
+            <a href="cart">Cos de cumparaturi</a>
+            <a href="orders"><span th:text="${history}"></span></a><!--daca e logat, cos, daca nu, login-->
+            <a href="Contact">Contact</a>
+            <a href="About">Despre</a>
+            <a href="dashboard">Acasă</a>
             <img class="mr-sm-4" src="img/Imagini/Doar-flori.png" style="padding-left: 5px; padding-top: 2px; ">
             <input type="text" placeholder="Search" aria-label="Search" style="width: 200px; border-radius: 7px;">
             <button class="btn btn-outline-white btn-sm my-0" type="submit" style="border-radius: 7px;"><i
@@ -58,13 +58,15 @@
     </div>
 </div>
 
+
 <div style="padding-top: 56px; ">
     <div class="leftside">
         <div><p></p></div>
     </div>
     <div class="centerside" style="font-family: 'Patrick Hand', cursive;">
-		
-		<div id="myCarousel" class="carousel slide" data-ride="carousel"style="height: 350px;width: 40%; float: left;">
+        <div style="position: static;">
+            <div class="carousel slide" data-ride="carousel" id="myCarousel"
+                 style="height: 350px;width: 40%; float: left;">
                 <!-- Indicators -->
                 <ol class="carousel-indicators">
                     <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
@@ -73,17 +75,17 @@
                 </ol>
 
                 <!-- Wrapper for slides -->
-               	 <div class="carousel-inner"> <!--trebuie puse poze-->
+                <div class="carousel-inner"> <!--trebuie puse poze-->
                     <div class="item active">
-                        <img src="img/Imagini/3.jpg" alt="Los Angeles" style="height: 350px; margin: auto;">
+                        <img th:src="${product.photo1}" alt="Los Angeles" style="height: 350px; margin: auto;">
                     </div>
                     <div class="item">
-                        <img src="img/Imagini/de test.jpg" alt="Chicago" style="height: 350px; margin: auto;">
+                        <img th:src="${product.photo2}" alt="Chicago" style="height: 350px; margin: auto;">
                     </div>
                     <div class="item">
-                        <img src="img/Imagini/Doar-flori.png" alt="New York" style="height: 350px; margin: auto;">
+                        <img th:src="${product.photo3}" alt="New York" style="height: 350px; margin: auto;">
                     </div>
-                 </div>
+                </div>
 
                 <!-- Left and right controls -->
                 <a class="left carousel-control" href="#myCarousel" data-slide="prev">
@@ -95,53 +97,64 @@
                     <span class="sr-only">Next</span>
                 </a>
             </div>
-		<div style="height: 350px; width: 10%; float: left;"><p></p></div>
-		
-		<div style="height: 350px; width: 50%; float: left; color: #e6d2ff; padding-top: 20px;">
-			<div>
-					<h1 th:text="${x.name}" style="text-align: left">Numele produsului</h1>
-			</div>
-			<div>
-					<h1 class="card-title pricing-card-title" style="float: left; font-family: 'Patrick Hand', cursive; font-size: 30px;">
-                         <span th:text="${x.price}">30</span> RON</h1>
-			        <button type="button" class="btn btn-dark" style="border-radius: 15px; font-family: 'Patrick Hand', cursive; font-size: 20px; float: right;">
-                              Cumpara
-                   	</button>
-			</div><br>
-			
-			<div class="card-body" style="text-align: left; padding-top: 30px; ">
-				    <h1 style="text-align: left;">Caracteristici :</h1>
-                    <h3><i class="fas fa-angle-double-right fa-xs"></i>&nbsp;Descriere:&nbsp;<span th:text="${x.description}"></span></h3>
-                    <h3><i class="fas fa-angle-double-right fa-xs"></i>&nbsp;Materiale:&nbsp;<span th:text="${x.materials}"></span></h3>
-                    <h3><i class="fas fa-angle-double-right fa-xs"></i>&nbsp;Dimensiuni:&nbsp;<span th:text="${x.dimensions}"></span></h3>
-                    <h3><i class="fas fa-angle-double-right fa-xs"></i>&nbsp;Culoare:&nbsp;<span th:text="${x.color}"></span></h3>
-			</div>
-			</div>
-		&nbsp;&nbsp;
-		
-		<div style=" min-width: 100%;">
-					<div class="info" style="width: 50%;float: left;">
-						<h2>Adauga un comentariu :</h2><br>
-						<input class="form-control" type="text" size="20" placeholder="E-mail" style="width: 80%; background-color: #A0E0FF">
-						<p th:text="${message}"  style="color: #c50013;">daca nu o fi valid</p>
-						<input class="form-control" type="text" size="20" placeholder="scrie comentariul aici (500)"
-							   style="width: 80%; height: 100px; float: left; background-color: #A0E0FF">
-						<button type="button" class="btn btn-dark"
-								style="border-radius: 15px; font-size: 14px; float: left; padding-left: 10px;">Trimite
-						</button>
-					</div>
-					<h2>Comentarii:</h2>
-					<div data-spy="scroll" data-target="#list-example" data-offset="0" class="scrollspy-example col-8"
-						 style="width: 50%;float: left; height: 200px; position: relative; overflow-y: scroll; background-color: #a0e0ff; border-radius: 10px;">
-						<div th:each="${x.user}">
-							<h4 id="list-item" th:text="${x.name}">sdf</h4>
-							<p tx:text="${x.date}">sdf</p>
-							<h5 tx:text="${x.comment}">dfs</h5>
-						</div>
-					</div>
-		</div>
-	</div>
-	   
+            <div style="height: 350px; width: 10%; float: left;"><p></p></div>
+
+            <div style="height: 350px; width: 50%; float: left; color: #e6d2ff; padding-top: 20px;">
+                <div>
+                    <h1 th:text="${product.name}" style="text-align: left">Numele produsului</h1>
+                </div>
+                <div>
+                    <h1 class="card-title pricing-card-title"
+                        style="float: left; font-family: 'Patrick Hand', cursive; font-size: 30px;">
+                        <span th:text="${product.price}"></span> RON</h1><br>
+                    <form action="/add-to-cart" method="post">
+                        <input name="productId" hidden th:value="${product.id}">
+                        <button type="submit" class="btn btn-dark"
+                                style="border-radius: 15px; font-size: 14px; float: right; ">Adauga in cos
+                        </button>
+                    </form>
+                </div>
+                <br>
+
+                <div class="card-body" style="text-align: left; padding-top: 30px; ">
+                    <h1 style="text-align: left;">Caracteristici :</h1>
+                    <h3><i class="fas fa-angle-double-right fa-xs"></i>&nbsp;Descriere:&nbsp;<span
+                            th:text="${product.description}"></span></h3>
+                    <h3><i class="fas fa-angle-double-right fa-xs"></i>&nbsp;Materiale:&nbsp;<span
+                            th:text="${product.materials}"></span></h3>
+                    <h3><i class="fas fa-angle-double-right fa-xs"></i>&nbsp;Dimensiuni:&nbsp;<span
+                            th:text="${product.dimensions}"></span></h3>
+                    <h3><i class="fas fa-angle-double-right fa-xs"></i>&nbsp;Culoare:&nbsp;<span
+                            th:text="${product.color}"></span></h3>
+                </div>
+            </div>
+            &nbsp;&nbsp;
+        </div>
+
+        <div style=" min-width: 100%; position: static;">
+            <div class="info" style="width: 50%;float: left;">
+                <h2>Adauga un comentariu :</h2><br>
+                <input class="form-control" type="text" size="20" placeholder="E-mail"
+                       style="width: 80%; background-color: #A0E0FF">
+                <p th:text="${message}" style="color: #c50013;">daca nu o fi valid</p>
+                <input class="form-control" type="text" size="20" placeholder="scrie comentariul aici (500)"
+                       style="width: 80%; height: 100px; float: left; background-color: #A0E0FF">
+                <button type="button" class="btn btn-dark"
+                        style="border-radius: 15px; font-size: 14px; float: left;">Trimite
+                </button>
+            </div>
+            <h2>Comentarii:</h2>
+            <div data-spy="scroll" data-target="#list-example" data-offset="0" class="scrollspy-example col-8"
+                 style="width: 50%;float: left; height: 200px; position: relative; overflow-y: scroll; background-color: #a0e0ff; border-radius: 10px;">
+                <div><!--th:each="${x.user}"-->
+                    <h4> nume prenume</h4><!--th:text="${x.name}"-->
+                    <p>data.20.20</p><!--tx:text="${x.date}"-->
+                    <h5> comment comment</h5><!-- tx:text="${x.comment}"-->
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="rightside"></div>
     <div class="bottomside">
         <h4 style="padding-left: 45%; padding-top: 20px; font-family: 'Patrick Hand', cursive;">© Chanos Art 2020 </h4>

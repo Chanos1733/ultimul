@@ -1,6 +1,7 @@
 package ro.simo.ChanosArtShop.Database;
 
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +20,9 @@ public class UserService {
         if (userDAO.findByEmail(email).size() > 0) {
             throw new InvalidPassword("Exista deja un cont cu acest Email!");
         }
-        userDAO.create(name, country, city, adress, phone, email, password);
+        //folosim functia md5 pentru a cripta parola
+        String passwordMD5 = DigestUtils.md5Hex(password);
+        userDAO.create(name, country, city, adress, phone, email, passwordMD5);
     }
 
     public List<User> findByEmail(String email) {
