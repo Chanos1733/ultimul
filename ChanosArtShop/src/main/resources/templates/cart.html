@@ -42,6 +42,7 @@
         <div class="topnav fixed-top">
             <a href="cart" class="active">Cos de cumparaturi</a>
             <a href="orders"><span th:text="${history}"></span></a><!--daca e logat, cos, daca nu, login-->
+            <a href="index"><span th:text="${login}"></span></a>
             <a href="Contact">Contact</a>
             <a href="About">Despre</a>
             <a href="dashboard">Acasă</a>
@@ -70,7 +71,7 @@
 
                 <div class="card-header" style="background-color: burlywood;">
                     <h1 class="card-title pricing-card-title">Prețul: <span
-                            th:text="${x.price}">12</span> RON</h1>
+                            th:text="${x.price}"></span> RON</h1>
                 </div>
                 <div class="card-body">
                     <ul class="list-group list-group-flush">
@@ -79,18 +80,18 @@
                                 th:src="${x.photo3}" style="height: 50px;">&nbsp;&nbsp;&nbsp;<span
                                 style="font-size: x-large;" th:text="${x.name}"></span>
                         </li>
-                        <div>
-                            <a href="/product"><small>Actualizează</small></a>
-                            <input class="item-quantity qty k-valid" type="number" style="width: 50px;" name="Quantity"
+                        <form action="/actualizat" method="post">
+                            <input class="item-quantity qty k-valid" type="number" style="width: 50px;" name="quantity"
                                    th:value="${x.quantity}">&nbsp;
-                        </div>
+                            <a href="/cart"><small>Actualizează</small></a>
+                        </form>
                     </ul>
                 </div>
             </div>
 
         </div>
         <a href="/save-cart">
-            <button type="button" class="btn btn-dark"
+            <button class="btn btn-dark"
                     style="border-radius: 15px; font-size: 17px; ">Trimite comanda
             </button>
         </a>

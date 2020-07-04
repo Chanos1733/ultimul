@@ -56,7 +56,7 @@ public class ProductController {
         return new ModelAndView("redirect:product?id=" + id);
     }
 
-    @GetMapping("shopping-cart")
+    @GetMapping("cart")
     public ModelAndView shoppingCart() {
         ModelAndView modelAndView = new ModelAndView("cart");
         List<CartProduct> productsFromCart = new ArrayList<>();
@@ -90,4 +90,11 @@ public class ProductController {
 
         return new ModelAndView("redirect:/Dupa_comanda.html");
     }
+
+    /*@PostMapping("actualizat")
+    public ModelAndView actualizat(@RequestParam ("quantity") Integer newQuantity,
+                                   @RequestParam ("puroductId") Integer id) {
+        if (newQuantity != product(id).getq)
+        return new ModelAndView("/cart");
+    }*/
 }

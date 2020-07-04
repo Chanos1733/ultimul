@@ -13,15 +13,7 @@ public class Product {
     private String photo2;
     private String photo3;
     private String url;
-    private int quantity;
 
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
 
     public String getColor() {
         return color;

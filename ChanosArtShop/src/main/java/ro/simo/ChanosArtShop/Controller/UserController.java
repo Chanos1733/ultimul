@@ -100,7 +100,7 @@ public class UserController {
 
         //verific daca utilizatorul este logat sau nu
         if (userSession.getUserId() == 0) {
-            modelAndView.addObject("history", "Login");
+            modelAndView.addObject("login", "Login");
         } else {
             modelAndView.addObject("history", "Istoric comenzi");
         }
@@ -121,17 +121,33 @@ public class UserController {
 
     @GetMapping("/ordersHistory")
     public ModelAndView ordersHistory(@RequestParam("email") String email) {
-        return new ModelAndView ("/orders");
+        return new ModelAndView ("/ordersHistory");
     }
 
-    @GetMapping("/about")
+    @GetMapping("/About")
     public ModelAndView about() {
-        return new ModelAndView("redirect:/About.html");
+        ModelAndView modelAndView= new ModelAndView("About.html");
+
+        //verific daca utilizatorul este logat sau nu
+        if (userSession.getUserId() == 0) {
+            modelAndView.addObject("login", "Login");
+        } else {
+            modelAndView.addObject("history", "Istoric comenzi");
+        }
+        return modelAndView;
     }
 
-    @GetMapping("/contact")
+    @GetMapping("/Contact")
     public ModelAndView contact() {
-        return new ModelAndView("redirect:/Contact.html");
+        ModelAndView modelAndView= new ModelAndView("Contact.html");
+
+        //verific daca utilizatorul este logat sau nu
+        if (userSession.getUserId() == 0) {
+            modelAndView.addObject("login", "Login");
+        } else {
+            modelAndView.addObject("history", "Istoric comenzi");
+        }
+        return modelAndView;
     }
 
 
