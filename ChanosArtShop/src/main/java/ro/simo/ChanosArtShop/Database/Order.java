@@ -1,8 +1,9 @@
 package ro.simo.ChanosArtShop.Database;
 
 public class Order {
+
     private int id;
-    private int userId;
+    private int userIid;
     private String address;
     private double price;
 
@@ -14,12 +15,20 @@ public class Order {
         this.id = id;
     }
 
-    public int getUserId() {
-        return userId;
+    public double getPrice() {
+        return price;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public int getUserIid() {
+        return userIid;
+    }
+
+    public void setUserIid(int userIid) {
+        this.userIid = userIid;
     }
 
     public String getAddress() {
@@ -28,13 +37,5 @@ public class Order {
 
     public void setAddress(String address) {
         this.address = address;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
     }
 }

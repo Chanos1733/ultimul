@@ -44,8 +44,9 @@
 <div class="nav ">
     <div style="height: 10%;">
         <div class="topnav fixed-top">
-            <a href="cart">Cos de cumparaturi</a>
-            <a href="orders"><span th:text="${history}"></span></a><!--daca e logat, cos, daca nu, login-->
+            <a href="cart">Cos de cumparaturi (<span th:text="${shoppingCartSize}"></span>)</a>
+            <a href="ordersHistory"><span th:text="${history}"></span></a><!--daca e logat, cos, daca nu, login-->
+            <a href="index.html"><span th:text="${login}"></span></a>
             <a href="Contact" class="active">Contact</a>
             <a href="About">Despre</a>
             <a href="dashboard">Acasă</a>

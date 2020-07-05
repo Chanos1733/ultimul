@@ -36,14 +36,13 @@ public class ProductController {
         } else {
             modelAndView.addObject("history", "Istoric comenzi");
         }
-
         Product product = productDAO.findById(id);
         modelAndView.addObject("product", product);
         int productCounter = 0;
-        for(int quantityForProduct: userSession.getShoppingCart().values()) {
+        for (int quantityForProduct : userSession.getShoppingCart().values()) {
             productCounter = productCounter + quantityForProduct;
         }
-        modelAndView.addObject("shoppingCartSize", userSession.getShoppingCart().size());
+        modelAndView.addObject("shoppingCartSize", productCounter );
 
         return modelAndView;
     }
@@ -56,12 +55,24 @@ public class ProductController {
         return new ModelAndView("redirect:product?id=" + id);
     }
 
-    @GetMapping("cart")
+    @GetMapping("/cart")
     public ModelAndView shoppingCart() {
-        ModelAndView modelAndView = new ModelAndView("cart");
+        ModelAndView modelAndView = new ModelAndView("/cart");
         List<CartProduct> productsFromCart = new ArrayList<>();
+        //verific daca utilizatorul este logat sau nu
+        if (userSession.getUserId() == 0) {
+            modelAndView.addObject("login", "Login");
+        } else {
+            modelAndView.addObject("history", "Istoric comenzi");
+        }
+        //cantitatea din cosul de cumparaturi
+        int productCounter = 0;
+        for (int quantityForProduct : userSession.getShoppingCart().values()) {
+            productCounter = productCounter + quantityForProduct;
+        }
+        modelAndView.addObject("shoppingCartSize", productCounter );
 
-        for(Map.Entry<Integer, Integer> entry: userSession.getShoppingCart().entrySet()) {
+        for (Map.Entry<Integer, Integer> entry : userSession.getShoppingCart().entrySet()) {
             int quantity = entry.getValue();
             int productId = entry.getKey();
             Product productFromDatabase = productDAO.findById(productId);
@@ -72,29 +83,20 @@ public class ProductController {
             cartProduct.setPhoto1(productFromDatabase.getPhoto1());
             cartProduct.setPhoto2(productFromDatabase.getPhoto2());
             cartProduct.setPhoto3(productFromDatabase.getPhoto3());
-            cartProduct.setPrice(productFromDatabase.getPrice());
-
+            cartProduct.setPrice(productFromDatabase.getPrice()*quantity);
             productsFromCart.add(cartProduct);
         }
+
         modelAndView.addObject("products", productsFromCart);
         return modelAndView;
     }
 
     @GetMapping("save-cart")
     public ModelAndView saveCart() {
-        //sa salvam in baza de date cosul de cumparaturi
+        //salvam in baza de date cosul de cumparaturi
         orderDAO.newOrder(userSession.getUserId(), userSession.getShoppingCart());
 
-        //curatam cosul de cumparaturi
-        userSession.getShoppingCart().clear();
-
-        return new ModelAndView("redirect:/Dupa_comanda.html");
+        return new ModelAndView("redirect:after.html");
     }
 
-    /*@PostMapping("actualizat")
-    public ModelAndView actualizat(@RequestParam ("quantity") Integer newQuantity,
-                                   @RequestParam ("puroductId") Integer id) {
-        if (newQuantity != product(id).getq)
-        return new ModelAndView("/cart");
-    }*/
 }

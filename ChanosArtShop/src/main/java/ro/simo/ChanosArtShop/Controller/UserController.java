@@ -95,19 +95,23 @@ public class UserController {
     public ModelAndView home() {
 
         List<Product> products = productDAO.findAll();
-
+        for (Product p : products) {
+            p.setUrl("product?id=" + p.getId());
+        }
         ModelAndView modelAndView = new ModelAndView("dashboard");
 
-        //verific daca utilizatorul este logat sau nu
         if (userSession.getUserId() == 0) {
             modelAndView.addObject("login", "Login");
         } else {
             modelAndView.addObject("history", "Istoric comenzi");
         }
-
-        for (Product p : products) {
-            p.setUrl("product?id=" + p.getId());
+        //cantitatea din cosul de cumparaturi
+        int productCounter = 0;
+        for (int quantityForProduct : userSession.getShoppingCart().values()) {
+            productCounter = productCounter + quantityForProduct;
         }
+        modelAndView.addObject("shoppingCartSize", productCounter );
+
 
         modelAndView.addObject("product", products);
 
@@ -119,34 +123,39 @@ public class UserController {
         return new ModelAndView("/index");
     }
 
-    @GetMapping("/ordersHistory")
-    public ModelAndView ordersHistory(@RequestParam("email") String email) {
-        return new ModelAndView ("/ordersHistory");
-    }
-
     @GetMapping("/About")
     public ModelAndView about() {
-        ModelAndView modelAndView= new ModelAndView("About.html");
+        ModelAndView modelAndView= new ModelAndView("About");
 
-        //verific daca utilizatorul este logat sau nu
         if (userSession.getUserId() == 0) {
             modelAndView.addObject("login", "Login");
         } else {
             modelAndView.addObject("history", "Istoric comenzi");
         }
+        //cantitatea din cosul de cumparaturi
+        int productCounter = 0;
+        for (int quantityForProduct : userSession.getShoppingCart().values()) {
+            productCounter = productCounter + quantityForProduct;
+        }
+        modelAndView.addObject("shoppingCartSize", productCounter );
         return modelAndView;
     }
 
     @GetMapping("/Contact")
     public ModelAndView contact() {
-        ModelAndView modelAndView= new ModelAndView("Contact.html");
+        ModelAndView modelAndView= new ModelAndView("Contact");
 
-        //verific daca utilizatorul este logat sau nu
         if (userSession.getUserId() == 0) {
             modelAndView.addObject("login", "Login");
         } else {
             modelAndView.addObject("history", "Istoric comenzi");
         }
+        //cantitatea din cosul de cumparaturi
+        int productCounter = 0;
+        for (int quantityForProduct : userSession.getShoppingCart().values()) {
+            productCounter = productCounter + quantityForProduct;
+        }
+        modelAndView.addObject("shoppingCartSize", productCounter );
         return modelAndView;
     }
 
