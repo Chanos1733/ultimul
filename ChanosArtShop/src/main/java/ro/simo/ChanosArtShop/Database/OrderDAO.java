@@ -13,14 +13,29 @@ public class OrderDAO {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    public void newOrder (int userId, Map<Integer, Integer> productsToQuantity) {
-        jdbcTemplate.update("insert into orders values(null, ?,?,?)", userId, null, null);
+    @Autowired
+    ProductDAO productDAO;
+
+    public void newOrder(int userId, Map<Integer, Integer> productsToQuantity) {
+        //calculam valoarea total a comenzii
+        double totalPrice = 0;
+        for (Map.Entry<Integer, Integer> entry : productsToQuantity.entrySet()) {
+            Product product = productDAO.findById(entry.getKey());
+            totalPrice = totalPrice + (product.getPrice() * entry.getValue());
+        }
+
+
+        jdbcTemplate.update("insert into orders values(null, ?,?,?)", userId, null, totalPrice);
 
         int orderId = jdbcTemplate.queryForObject("select max(id) from orders", Integer.class);
 
         for (Map.Entry<Integer, Integer> entry : productsToQuantity.entrySet()) {
             jdbcTemplate.update("insert into orders_product values(null, ?,?,?)", orderId, entry.getKey(), entry.getValue());
         }
+    }
+
+    public List<Order> findOrderForUser(Integer userId) {
+        return jdbcTemplate.query("select * from orders where user_id =" + userId + " order by id desc", new OrderRowMapper());
     }
 
 }

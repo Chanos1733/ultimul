@@ -93,10 +93,21 @@ public class ProductController {
 
     @GetMapping("save-cart")
     public ModelAndView saveCart() {
+        ModelAndView modelAndView = new ModelAndView("redirect:after.html");
+
         //salvam in baza de date cosul de cumparaturi
         orderDAO.newOrder(userSession.getUserId(), userSession.getShoppingCart());
 
-        return new ModelAndView("redirect:after.html");
+        //verific daca utilizatorul este logat sau nu
+        if (userSession.getUserId() == 0) {
+            modelAndView.addObject("login", "Login");
+            return new ModelAndView("redirect:/index.html");
+        } else {
+            modelAndView.addObject("history", "Istoric comenzi");
+            //se curata cosul de cumparaturi
+            userSession.getShoppingCart().clear();
+            return modelAndView;
+        }
     }
 
 }

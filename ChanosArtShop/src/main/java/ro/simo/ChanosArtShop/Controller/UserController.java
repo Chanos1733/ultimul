@@ -29,6 +29,9 @@ public class UserController {
     @Autowired
     ProductDAO productDAO;
 
+    @Autowired
+    OrderDAO orderDAO;
+
     //parolele sunt identice?
     //emailul este deja in baza de date?
     //stochez in baza de date un nou utilizator
@@ -158,6 +161,26 @@ public class UserController {
         modelAndView.addObject("shoppingCartSize", productCounter );
         return modelAndView;
     }
+    @GetMapping("/ordersHistory")
+    public ModelAndView history() {
+        List<Order> orders = orderDAO.findOrderForUser(userSession.getUserId());
+        ModelAndView modelAndView = new ModelAndView("orders");
+        modelAndView.addObject("orders", orders);
+        if (userSession.getUserId() == 0) {
+            modelAndView.addObject("login", "Login");
+        } else {
+            modelAndView.addObject("history", "Istoric comenzi");
+        }
+        //cantitatea din cosul de cumparaturi
+        int productCounter = 0;
+        for (int quantityForProduct : userSession.getShoppingCart().values()) {
+            productCounter = productCounter + quantityForProduct;
+        }
+        modelAndView.addObject("shoppingCartSize", productCounter );
+        return modelAndView;
+    }
+
+
 
 
 }
