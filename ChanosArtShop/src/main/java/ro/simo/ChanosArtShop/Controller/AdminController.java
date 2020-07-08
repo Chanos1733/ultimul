@@ -24,7 +24,7 @@ public class AdminController {
     @GetMapping("/admin/products")
     public ModelAndView viewProducts() {
         ModelAndView modelAndView = new ModelAndView("admin/products");
-        List<Product> products = productDAO.findByPage(1);
+        List<Product> products = productDAO.findAll();
         modelAndView.addObject("products", products);
 
         return modelAndView;

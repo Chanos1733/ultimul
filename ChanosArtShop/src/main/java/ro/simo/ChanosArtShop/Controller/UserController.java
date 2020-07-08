@@ -1,5 +1,6 @@
 package ro.simo.ChanosArtShop.Controller;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -72,10 +73,16 @@ public class UserController {
 
     @PostMapping("/login")
     public ModelAndView index(@RequestParam("email") String email,
-                              @RequestParam("password") String password,
-                              HttpServletRequest request) {
+                              @RequestParam("password") String password) {
         ModelAndView modelAndView = new ModelAndView("index");
         List<User> userList = userService.findByEmail(email);
+
+        if (email.equals("chanos.art@gmail.com")) {
+            User userFromDatabase = userList.get(0);
+            if (userFromDatabase.getPassword().equals(DigestUtils.md5Hex(password))){
+                return new ModelAndView("redirect:/admin/products");
+            }
+        }
         if (userList.size() == 0) {
             modelAndView.addObject("message", "Credentialele nu sunt corecte!");
         }
@@ -180,6 +187,10 @@ public class UserController {
         return modelAndView;
     }
 
+    @GetMapping ("/add-comment")
+    public ModelAndView addComment() {
+        return new ModelAndView("/product");
+    }
 
 
 
