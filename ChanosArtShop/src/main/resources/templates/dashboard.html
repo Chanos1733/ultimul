@@ -39,21 +39,24 @@
     <link href="css/CSS trebuie LOGIN.css" rel="stylesheet" type="text/css">
 
 </head>
-<body style="font-family: 'Patrick Hand', cursive; background-image: linear-gradient(#184530 25%, #49ab6b 100%); height: -web-max-fit;background-repeat: no-repeat;">
+<body style="font-family: 'Patrick Hand', cursive; background-image: linear-gradient(#184530 25%, #49ab6b 100%); height: -web-max-fit;background-repeat: no-repeat;background-attachment: fixed;">
 
 <div class="nav ">
     <div style="height: 10%;">
         <div class="topnav fixed-top">
             <a href="cart">Cos de cumparaturi (<span th:text="${shoppingCartSize}"></span>)</a>
-            <a href="ordersHistory"><span th:text="${history}"></span></a><!--daca e logat, cos, daca nu, login-->
-            <a href="index.html"><span th:text="${login}"></span></a>
+            <a th:if="${logged==true}" href="ordersHistory">Istoric de comenzi<span th:text="${history}"></span></a>
+            <a th:if="${logged==true}" href="logout">Logout</a>
+            <a th:if="${logged==false}" href="index.html">Login</a>
             <a href="Contact">Contact</a>
             <a href="About">Despre</a>
             <a href="dashboard" class="active">Acasă</a>
-            <img class="mr-sm-4" src="img/Imagini/Doar-flori.png" style="padding-left: 5px; padding-top: 2px; ">
-            <input type="text" placeholder="Search" aria-label="Search" style="width: 200px; border-radius: 7px;">
-            <button class="btn btn-outline-white btn-sm my-0" type="submit" style="border-radius: 7px;"><i
-                    class="fas fa-search"></i></button>
+            <form action="/search" method="post">
+                <img class="mr-sm-4" src="img/Imagini/Doar-flori.png" style="padding-left: 5px; padding-top: 2px; ">
+                <input type="text" placeholder="Search" aria-label="Search" style="width: 200px; border-radius: 7px;" name="cautat" th:value="${cautat}">
+                <button class="btn btn-outline-white btn-sm my-0" type="submit" style="border-radius: 7px;"><i
+                        class="fas fa-search"></i></button>
+            </form>
         </div>
     </div>
 </div>
@@ -78,14 +81,15 @@
                 <!-- Wrapper for slides -->
                 <div class="carousel-inner"> <!--trebuie puse poze-->
                     <div class="item active">
-                        <img src="peisaj.jpg" alt="Los Angeles"
+                        <img src="img/Imagini/all2.jpg" alt="Los Angeles"
                              style="height: 350px; width: 900px; margin: auto;">
                     </div>
                     <div class="item">
-                        <img src="3.jpg" alt="Chicago" style="height: 350px; width: 900px; margin: auto;">
+                        <img src="img/Imagini/all1.jpg" alt="Chicago"
+                             style="height: 350px; width: 900px; margin: auto;">
                     </div>
                     <div class="item">
-                        <img src="Logo_mic.png" alt="New York"
+                        <img src="img/Imagini/all3.jpg" alt="New York"
                              style="height: 350px; width: 900px; margin: auto;">
                     </div>
                 </div>
@@ -102,6 +106,7 @@
             </div>
             &nbsp;&nbsp;
             <div style="width: 100%;">
+                <div><h1 style="color : #80002f; position: fixed;" th:text="${noResult}"></h1></div>
                 <div class="card-deck mb-3 text-center"
                      style="max-width: 300px; min-width: 250px; flex-flow: nowrap !important;">
 
@@ -109,7 +114,7 @@
                          style="max-width: 300px; min-width: 250px; float: left; background-color: #A0E0FF; border-radius: 23px;">
                         <!--   -->
                         <div class="card-header">
-                            <img th:src="${x.photo1}"
+                            <img th:src="${'/img/Imagini/' + x.photo1}"
                                  style=" max-width: 200px; max-height: 200px;">
                             <!--   -->
 
@@ -118,20 +123,23 @@
                             <h3 class="my-0 font-weight-normal" th:text="${x.name}"><!--    --> </h3>
                             <h1 class="card-title pricing-card-title"><span th:text="${x.price}"></span> RON</h1>
                             <form action="/product" method="get">
-                                <input name="productId" th:value="${x.id}" hidden><!--  -->
-                                <button class="btn btn-dark"
-                                        style="border-radius: 15px; font-size: 14px; float: left;width: -webkit-fill-available;">
-                                    <a th:href="${x.url}">
-                                        Detalii</a>
-                                </button>
+                                <input name="id" th:value="${x.id}" hidden><!--  -->
+                                <a th:href="${x.url}">
+                                    <button class="btn btn-dark"
+                                            style="border-radius: 15px; font-size: 14px; float: left;width: -webkit-fill-available;">
+                                        Detalii
+                                    </button>
+                                </a>
                             </form>
-                            <form action="/add-to-cart" method="post">
+                            <form action="/add-to-cart-dash" method="post">
                                 <input name="productId" th:value="${x.id}" hidden><!--  -->
-                                <button type="submit" class="btn btn-dark"
-                                        style="border-radius: 15px; font-size: 14px; float: left;width: -webkit-fill-available;">
-                                    <a>
-                                        Adauga in coș</a>
-                                </button>
+                                <a>
+                                    <button type="submit" class="btn btn-dark"
+                                            style="border-radius: 15px; font-size: 14px; float: left;width: -webkit-fill-available;">
+
+                                        Adauga in coș
+                                    </button>
+                                </a>
                             </form>
 
                         </div>
@@ -144,7 +152,7 @@
     <div class="rightside"><p></p></div>
 </div>
 
-<div class="bottomside">
+<div class="bottomside" style="bottom: 0;">
     <h4 style="padding-left: 45%; padding-top: 20px;">© Chanos Art 2020 </h4>
 </div>
 <div class="fixed-right" style="position: fixed;">

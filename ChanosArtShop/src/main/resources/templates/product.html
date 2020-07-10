@@ -39,22 +39,25 @@
     <link href="css/CSS trebuie LOGIN.css" rel="stylesheet" type="text/css">
 
 </head>
-<body style="font-family: 'Patrick Hand', cursive; background-image: linear-gradient(#184530 25%, #49ab6b 100%); height: auto;;background-repeat: no-repeat;">
+<body style="font-family: 'Patrick Hand', cursive; background-image: linear-gradient(#184530 25%, #49ab6b 100%); height: auto;;background-repeat: no-repeat; background-attachment: fixed;">
 
 
 <div class="nav ">
     <div style="height: 10%;">
         <div class="topnav fixed-top">
             <a href="cart">Cos de cumparaturi (<span th:text="${shoppingCartSize}"></span>)</a>
-            <a href="ordersHistory"><span th:text="${history}"></span></a><!--daca e logat, cos, daca nu, login-->
-            <a href="index.html"><span th:text="${login}"></span></a>
+            <a th:if="${logged==true}" href="ordersHistory">Istoric de comenzi<span th:text="${history}"></span></a>
+            <a th:if="${logged==true}" href="logout">Logout</a>
+            <a th:if="${logged==false}" href="index.html">Login</a>
             <a href="Contact">Contact</a>
             <a href="About">Despre</a>
             <a href="dashboard">Acasă</a>
-            <img class="mr-sm-4" src="img/Imagini/Doar-flori.png" style="padding-left: 5px; padding-top: 2px; ">
-            <input type="text" placeholder="Search" aria-label="Search" style="width: 200px; border-radius: 7px;">
-            <button class="btn btn-outline-white btn-sm my-0" type="submit" style="border-radius: 7px;"><i
-                    class="fas fa-search"></i></button>
+            <form action="/search" method="post">
+                <img class="mr-sm-4" src="img/Imagini/Doar-flori.png" style="padding-left: 5px; padding-top: 2px; ">
+                <input type="text" placeholder="Search" aria-label="Search" style="width: 200px; border-radius: 7px;" name="cautat" th:value="${cautat}">
+                <button class="btn btn-outline-white btn-sm my-0" type="submit" style="border-radius: 7px;"><i
+                        class="fas fa-search"></i></button>
+            </form>
         </div>
     </div>
 </div>
@@ -76,7 +79,7 @@
                 </ol>
 
                 <!-- Wrapper for slides -->
-                <div class="carousel-inner"> <!--trebuie puse poze-->
+                <div class="carousel-inner"> <!--trebuie puse poze  in folder-->
                     <div class="item active">
                         <img th:src="${product.photo1}" alt="Los Angeles" style="height: 350px; margin: auto;">
                     </div>
@@ -108,7 +111,7 @@
                     <h1 class="card-title pricing-card-title"
                         style="float: left; font-family: 'Patrick Hand', cursive; font-size: 30px;">
                         <span th:text="${product.price}"></span> RON</h1><br>
-                    <form action="/add-to-cart" method="post">
+                    <form action="/add-to-cart-product" method="post">
                         <input name="productId" hidden th:value="${product.id}">
                         <button type="submit" class="btn btn-dark"
                                 style="border-radius: 15px; font-size: 14px; float: right; ">Adauga in cos
@@ -134,32 +137,45 @@
 
         <div style=" min-width: 100%; position: static;">
             <div class="info" style="width: 50%;float: left;">
-                <h2>Adauga un comentariu :</h2><br>
-                <input class="form-control" type="text" size="20" placeholder="E-mail"
-                       style="width: 80%; background-color: #A0E0FF">//iau emailul
-                <p th:text="${message}" style="color: #c50013;">daca nu o fi valid</p>
-                <input class="form-control" type="text" size="20" placeholder="scrie comentariul aici (500)"
-                       style="width: 80%; height: 100px; float: left; background-color: #A0E0FF">
-                <button type="button" class="btn btn-dark"
-                        style="border-radius: 15px; font-size: 14px; float: left;">Trimite
-                </button>
+                <form>
+                    <h2>Adauga un comentariu :</h2>
+                    <h4 style="color: #c50013;" th:if="${!logged}"> Nu puteti posta un comentariu daca nu sunteti
+                    logat!</h4><br>
+                    <input class="form-control" type="text" size="20" placeholder="E-mail"
+                           style="width: 80%; background-color: #A0E0FF">//iau emailul
+                    <p th:text="${message}" style="color: #c50013;">daca nu o fi valid</p>
+
+                    <input class="form-control" type="text" size="20" placeholder="scrie comentariul aici (500)"
+                           style="width: 80%; height: 100px; float: left; background-color: #A0E0FF">
+                    <a th:if="${logged}" href="add-comment">
+                        <button type="button" class="btn btn-dark"
+                                style="border-radius: 15px; font-size: 14px; float: left;">Trimite
+                        </button>
+                    </a>
+                    <a th:if="${!logged}" href="index.html">
+                        <button type="button" class="btn btn-dark"
+                                style="border-radius: 15px; font-size: 14px; float: left;">Login
+                        </button>
+                    </a>
+                </form>
             </div>
             <h2>Comentarii:</h2>
             <div data-spy="scroll" data-target="#list-example" data-offset="0" class="scrollspy-example col-8"
                  style="width: 50%;float: left; height: 200px; position: relative; overflow-y: scroll; background-color: #a0e0ff; border-radius: 10px;">
-                <div><!--th:each="${x.user}"-->
-                    <h4> nume prenume</h4><!--th:text="${x.name}"-->
-                    <p>data.20.20</p><!--tx:text="${x.date}"-->
-                    <h5> comment comment</h5><!-- tx:text="${x.comment}"-->
+                <div th:each="x : ${comment}">
+                    <h4 th:text="${x.user_name}"> nume prenume</h4>
+                    <p tx:text="${x.date}">data.20.20</p>
+                    <h5 tx:text="${x.comment}"> comment comment</h5>
                 </div>
             </div>
         </div>
     </div>
 
     <div class="rightside"></div>
-    <div class="bottomside">
-        <h4 style="padding-left: 45%; padding-top: 20px; font-family: 'Patrick Hand', cursive;">© Chanos Art 2020 </h4>
+    <div class="bottomside" style="bottom: 0;">
+        <h4 style="padding-left: 45%; padding-top: 20px;">© Chanos Art 2020 </h4>
     </div>
+
 </div>
 
 <div class="fixed-right" style="position: fixed;">

@@ -30,29 +30,38 @@ public class ProductController {
     @GetMapping("/product")
     public ModelAndView product(@RequestParam("id") Integer id) {
         ModelAndView modelAndView = new ModelAndView("product");
+
         //verific daca utilizatorul este logat sau nu
-        if (userSession.getUserId() == 0) {
-            modelAndView.addObject("history", "Login");
-        } else {
-            modelAndView.addObject("history", "Istoric comenzi");
+        boolean logged = false;
+        if(userSession.getUserId() != 0) {
+            logged = true;
         }
+        modelAndView.addObject("logged", logged);
         Product product = productDAO.findById(id);
         modelAndView.addObject("product", product);
         int productCounter = 0;
         for (int quantityForProduct : userSession.getShoppingCart().values()) {
             productCounter = productCounter + quantityForProduct;
         }
-        modelAndView.addObject("shoppingCartSize", productCounter );
+        modelAndView.addObject("shoppingCartSize", productCounter);
 
         return modelAndView;
     }
 
-    @PostMapping("/add-to-cart")
-    public ModelAndView addToCart(@RequestParam("productId") Integer id) {
+    @PostMapping("/add-to-cart-product")
+    public ModelAndView addToCartProd(@RequestParam("productId") Integer id) {
         //server-ul trebuie sa tina minte id-urile de produse pe care userul le are in comanda
         userSession.addNewProduct(id);
 
         return new ModelAndView("redirect:product?id=" + id);
+    }
+
+    @PostMapping("/add-to-cart-dash")
+    public ModelAndView addToCartDash(@RequestParam("productId") Integer id) {
+        //server-ul trebuie sa tina minte id-urile de produse pe care userul le are in comanda
+        userSession.addNewProduct(id);
+
+        return new ModelAndView("redirect:/dashboard");
     }
 
     @GetMapping("/cart")
@@ -60,17 +69,17 @@ public class ProductController {
         ModelAndView modelAndView = new ModelAndView("/cart");
         List<CartProduct> productsFromCart = new ArrayList<>();
         //verific daca utilizatorul este logat sau nu
-        if (userSession.getUserId() == 0) {
-            modelAndView.addObject("login", "Login");
-        } else {
-            modelAndView.addObject("history", "Istoric comenzi");
+        boolean logged = false;
+        if(userSession.getUserId() != 0) {
+            logged = true;
         }
+        modelAndView.addObject("logged", logged);
         //cantitatea din cosul de cumparaturi
         int productCounter = 0;
         for (int quantityForProduct : userSession.getShoppingCart().values()) {
             productCounter = productCounter + quantityForProduct;
         }
-        modelAndView.addObject("shoppingCartSize", productCounter );
+        modelAndView.addObject("shoppingCartSize", productCounter);
 
         for (Map.Entry<Integer, Integer> entry : userSession.getShoppingCart().entrySet()) {
             int quantity = entry.getValue();
@@ -83,7 +92,7 @@ public class ProductController {
             cartProduct.setPhoto1(productFromDatabase.getPhoto1());
             cartProduct.setPhoto2(productFromDatabase.getPhoto2());
             cartProduct.setPhoto3(productFromDatabase.getPhoto3());
-            cartProduct.setPrice(productFromDatabase.getPrice()*quantity);
+            cartProduct.setPrice(productFromDatabase.getPrice() * quantity);
             productsFromCart.add(cartProduct);
         }
 
@@ -99,15 +108,20 @@ public class ProductController {
         orderDAO.newOrder(userSession.getUserId(), userSession.getShoppingCart());
 
         //verific daca utilizatorul este logat sau nu
+
+        boolean logged = false;
+
         if (userSession.getUserId() == 0) {
-            modelAndView.addObject("login", "Login");
             return new ModelAndView("redirect:/index.html");
         } else {
-            modelAndView.addObject("history", "Istoric comenzi");
+            logged = true;
+            modelAndView.addObject("logged", logged);
             //se curata cosul de cumparaturi
             userSession.getShoppingCart().clear();
             return modelAndView;
         }
     }
+
+
 
 }

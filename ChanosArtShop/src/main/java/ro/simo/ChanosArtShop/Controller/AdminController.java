@@ -1,5 +1,6 @@
 package ro.simo.ChanosArtShop.Controller;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,6 +10,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import ro.simo.ChanosArtShop.Database.Product;
 import ro.simo.ChanosArtShop.Database.ProductDAO;
+import ro.simo.ChanosArtShop.Database.User;
+import ro.simo.ChanosArtShop.Database.UserDAO;
+import ro.simo.ChanosArtShop.Security.UserSession;
 
 import java.util.List;
 
@@ -21,8 +25,22 @@ public class AdminController {
     @Autowired
     ProductService productService;
 
-    @GetMapping("/admin/products")
+    @Autowired
+    UserSession userSession;
+
+    @Autowired
+    UserDAO userDAO;
+
+    @GetMapping("/admin")
     public ModelAndView viewProducts() {
+        if (userSession.getUserId() == 0) {
+            return new ModelAndView("redirect:admin/products");
+        }
+        return new ModelAndView("redirect:/index.html");
+    }
+
+    @GetMapping("/admin/products")
+    public ModelAndView adminProducts() {
         ModelAndView modelAndView = new ModelAndView("admin/products");
         List<Product> products = productDAO.findAll();
         modelAndView.addObject("products", products);

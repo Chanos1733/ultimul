@@ -8,10 +8,10 @@
 		<version>2.1.13.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>ro.bogdan</groupId>
-	<artifactId>web2</artifactId>
+	<groupId>ro.simo</groupId>
+	<artifactId>ChanosArtShop</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>web2</name>
+	<name>ChanosArtShop</name>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>

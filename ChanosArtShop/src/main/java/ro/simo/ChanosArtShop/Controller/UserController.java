@@ -16,6 +16,7 @@ import ro.simo.ChanosArtShop.Security.UserSession;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.FileOutputStream;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -80,7 +81,7 @@ public class UserController {
         if (email.equals("chanos.art@gmail.com")) {
             User userFromDatabase = userList.get(0);
             if (userFromDatabase.getPassword().equals(DigestUtils.md5Hex(password))){
-                return new ModelAndView("redirect:/admin/products");
+                return new ModelAndView("redirect:/admin");
             }
         }
         if (userList.size() == 0) {
@@ -101,6 +102,16 @@ public class UserController {
         return modelAndView;
     }
 
+    @GetMapping ("/logout")
+    public ModelAndView logout() {
+        userSession.setUserId(0);
+        return new ModelAndView("redirect:/index.html");
+    }
+
+    public static void main(String[] args) {
+        LocalDateTime localDateTime = LocalDateTime.now();
+        System.out.println(localDateTime.getMinute());
+    }
     @GetMapping("/dashboard") // la fiecare pagina trebuie facuta verificarea, pengtru a afisa istoric sau login :D
     public ModelAndView home() {
 
@@ -110,19 +121,18 @@ public class UserController {
         }
         ModelAndView modelAndView = new ModelAndView("dashboard");
 
-        if (userSession.getUserId() == 0) {
-            modelAndView.addObject("login", "Login");
-        } else {
-            modelAndView.addObject("history", "Istoric comenzi");
+        boolean logged = false;
+        if(userSession.getUserId() != 0) {
+            logged = true;
         }
+        modelAndView.addObject("logged", logged);
+
         //cantitatea din cosul de cumparaturi
         int productCounter = 0;
         for (int quantityForProduct : userSession.getShoppingCart().values()) {
             productCounter = productCounter + quantityForProduct;
         }
         modelAndView.addObject("shoppingCartSize", productCounter );
-
-
         modelAndView.addObject("product", products);
 
         return modelAndView;
@@ -137,11 +147,12 @@ public class UserController {
     public ModelAndView about() {
         ModelAndView modelAndView= new ModelAndView("About");
 
-        if (userSession.getUserId() == 0) {
-            modelAndView.addObject("login", "Login");
-        } else {
-            modelAndView.addObject("history", "Istoric comenzi");
+        boolean logged = false;
+        if(userSession.getUserId() != 0) {
+            logged = true;
         }
+        modelAndView.addObject("logged", logged);
+
         //cantitatea din cosul de cumparaturi
         int productCounter = 0;
         for (int quantityForProduct : userSession.getShoppingCart().values()) {
@@ -154,12 +165,12 @@ public class UserController {
     @GetMapping("/Contact")
     public ModelAndView contact() {
         ModelAndView modelAndView= new ModelAndView("Contact");
-
-        if (userSession.getUserId() == 0) {
-            modelAndView.addObject("login", "Login");
-        } else {
-            modelAndView.addObject("history", "Istoric comenzi");
+        boolean logged = false;
+        if(userSession.getUserId() != 0) {
+            logged = true;
         }
+        modelAndView.addObject("logged", logged);
+
         //cantitatea din cosul de cumparaturi
         int productCounter = 0;
         for (int quantityForProduct : userSession.getShoppingCart().values()) {
@@ -173,11 +184,12 @@ public class UserController {
         List<Order> orders = orderDAO.findOrderForUser(userSession.getUserId());
         ModelAndView modelAndView = new ModelAndView("orders");
         modelAndView.addObject("orders", orders);
-        if (userSession.getUserId() == 0) {
-            modelAndView.addObject("login", "Login");
-        } else {
-            modelAndView.addObject("history", "Istoric comenzi");
+        boolean logged = false;
+        if(userSession.getUserId() != 0) {
+            logged = true;
         }
+        modelAndView.addObject("logged", logged);
+
         //cantitatea din cosul de cumparaturi
         int productCounter = 0;
         for (int quantityForProduct : userSession.getShoppingCart().values()) {
@@ -188,10 +200,29 @@ public class UserController {
     }
 
     @GetMapping ("/add-comment")
-    public ModelAndView addComment() {
+    public ModelAndView addComment(@RequestParam ("id_product") int id_product) {
+
         return new ModelAndView("/product");
     }
 
+    @PostMapping ("/search")
+    public ModelAndView search(@RequestParam ("cautat") String cautat) {
+        ModelAndView modelAndView = new ModelAndView("dashboard");
+        List<Product> products = productDAO.searchProduct(cautat);
+        for (Product p : products) {
+            p.setUrl("product?id=" + p.getId());
+        }
+        if(products.size()==0) {
+            modelAndView.addObject("noResult","Nu s-a gasit nici un rezultat!");
+        }
+        boolean logged = false;
+        if(userSession.getUserId() != 0) {
+            logged = true;
+        }
+        modelAndView.addObject("logged", logged);
 
+        modelAndView.addObject("product", products);
+        return modelAndView;
+    }
 
 }

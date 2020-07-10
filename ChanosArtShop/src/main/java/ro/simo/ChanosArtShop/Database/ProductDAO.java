@@ -33,6 +33,8 @@ public class ProductDAO {
                 name, description, 1, price, null, null
         );
     }
-
+    public List<Product> searchProduct(String cautat) {
+        return jdbcTemplate.query("SELECT * FROM product WHERE name LIKE '%" + cautat +"%';", new ProductRowMapper());
+    }
 
 }

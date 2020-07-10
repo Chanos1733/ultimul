@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html style="min-height: -webkit-fill-available;">
+<html>
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -39,21 +39,24 @@
     <link href="css/CSS trebuie LOGIN.css" rel="stylesheet" type="text/css">
 
 </head>
-<body style="font-family: 'Patrick Hand', cursive; background-image: linear-gradient(#184530 25%, #49ab6b 100%); height: -web-max-fit;background-repeat: no-repeat;">
+<body style="font-family: 'Patrick Hand', cursive; background-image: linear-gradient(#184530 25%, #49ab6b 100%); height: -web-max-fit;background-repeat: no-repeat;background-attachment: fixed;">
 
 <div class="nav ">
     <div style="height: 10%;">
         <div class="topnav fixed-top">
             <a href="cart">Cos de cumparaturi (<span th:text="${shoppingCartSize}"></span>)</a>
-            <a href="ordersHistory"><span th:text="${history}"></span></a><!--daca e logat, cos, daca nu, login-->
-            <a href="index.html"><span th:text="${login}"></span></a>
+            <a th:if="${logged==true}" href="ordersHistory">Istoric de comenzi<span th:text="${history}"></span></a>
+            <a th:if="${logged==true}" href="logout">Logout</a>
+            <a th:if="${logged==false}" href="index.html">Login</a>
             <a href="Contact">Contact</a>
             <a href="About" class="active">Despre</a>
-            <a href="dashboard">Acasă</a>
-            <img class="mr-sm-4" src="img/Imagini/Doar-flori.png" style="padding-left: 5px; padding-top: 2px; ">
-            <input type="text" placeholder="Search" aria-label="Search" style="width: 200px; border-radius: 7px;">
-            <button class="btn btn-outline-white btn-sm my-0" type="submit" style="border-radius: 7px;"><i
-                    class="fas fa-search"></i></button>
+            <a href="dashboard" >Acasă</a>
+            <form action="/search" method="post">
+                <img class="mr-sm-4" src="img/Imagini/Doar-flori.png" style="padding-left: 5px; padding-top: 2px; ">
+                <input type="text" placeholder="Search" aria-label="Search" style="width: 200px; border-radius: 7px;" name="cautat" th:value="${cautat}">
+                <button class="btn btn-outline-white btn-sm my-0" type="submit" style="border-radius: 7px;"><i
+                        class="fas fa-search"></i></button>
+            </form>
         </div>
     </div>
 </div>
@@ -124,9 +127,9 @@
 
                 </div>
                 <p dir="ltr" style="text-align: center;">
-						<span><img alt="" src="img/Imagini/Radu Simona Andreea.JPG"
+						<img alt="" src="img/Imagini/Radu Simona Andreea.JPG"
                                    style="width: 330px; height: 500px;">&nbsp;
-						<img alt="" src="img/Imagini/Radu Simona.JPG" style="width: 460px;"></span></p>
+						<img alt="" src="img/Imagini/Radu Simona.JPG" style="width: 460px;"></p>
             </div>
 
 
@@ -134,9 +137,10 @@
     </div>
     <div class="rightside"><p></p></div>
 
-    <div class="bottomside">
+    <div class="bottomside" style="bottom: 0;">
         <h4 style="padding-left: 45%; padding-top: 20px;">© Chanos Art 2020 </h4>
     </div>
+
 </div>
 
 <div class="fixed-right" style="position: fixed;">
