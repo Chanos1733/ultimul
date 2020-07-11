@@ -1,24 +1,21 @@
 package ro.simo.ChanosArtShop.Database;
 
 
-import java.sql.Date;
-import java.time.LocalDateTime;
-
 public class Order {
 
     private int id;
     private int userId;
     private String address;
     private double price;
-    /*private LocalDateTime date;
+    private String date;
 
-    public LocalDateTime getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(LocalDateTime date) {
+    public void setDate(String date) {
         this.date = date;
-    }*/
+    }
 
     public int getId() {
         return id;

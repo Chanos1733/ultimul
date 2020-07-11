@@ -34,6 +34,7 @@ public class UserController {
     @Autowired
     OrderDAO orderDAO;
 
+
     //parolele sunt identice?
     //emailul este deja in baza de date?
     //stochez in baza de date un nou utilizator
@@ -108,10 +109,6 @@ public class UserController {
         return new ModelAndView("redirect:/index.html");
     }
 
-    public static void main(String[] args) {
-        LocalDateTime localDateTime = LocalDateTime.now();
-        System.out.println(localDateTime.getMinute());
-    }
     @GetMapping("/dashboard") // la fiecare pagina trebuie facuta verificarea, pengtru a afisa istoric sau login :D
     public ModelAndView home() {
 
@@ -184,6 +181,7 @@ public class UserController {
         List<Order> orders = orderDAO.findOrderForUser(userSession.getUserId());
         ModelAndView modelAndView = new ModelAndView("orders");
         modelAndView.addObject("orders", orders);
+
         boolean logged = false;
         if(userSession.getUserId() != 0) {
             logged = true;
@@ -197,12 +195,6 @@ public class UserController {
         }
         modelAndView.addObject("shoppingCartSize", productCounter );
         return modelAndView;
-    }
-
-    @GetMapping ("/add-comment")
-    public ModelAndView addComment(@RequestParam ("id_product") int id_product) {
-
-        return new ModelAndView("/product");
     }
 
     @PostMapping ("/search")

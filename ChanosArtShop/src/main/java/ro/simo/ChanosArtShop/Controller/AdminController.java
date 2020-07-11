@@ -66,8 +66,14 @@ public class AdminController {
     @PostMapping("/admin/save-product")
     @ResponseBody
     public String saveProduct(@RequestParam("name") String name,
-                              @RequestParam("description") String description,
-                              @RequestParam("price") Double price) {
-        return productService.saveProduct(name, description, price);
+                              @RequestParam("price") double price,
+                              @RequestParam("materials") String materials,
+                              @RequestParam("dimensions")String dimensions,
+                              @RequestParam("color")String color,
+                              @RequestParam("description")String description,
+                              @RequestParam("photo1")String photo1,
+                              @RequestParam("photo2")String photo2,
+                              @RequestParam("photo3")String photo3) {
+        return productService.saveProduct(name, price,  materials, dimensions, color, description, photo1, photo2, photo3);
     }
 }

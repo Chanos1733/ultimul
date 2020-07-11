@@ -10,9 +10,23 @@ import java.util.List;
 public class CommentDAO {
 
     @Autowired
-    JdbcTemplate jdbcTemplate;
+    private JdbcTemplate jdbcTemplate;
 
-    public List<Comment> findAllForProduct(int id_product) {
-        return jdbcTemplate.query("select * from comment where id_product = " + id_product , new CommentRowMapper());
+    public List<Comment> findCommentsForProduct(Integer id_product) {
+        return jdbcTemplate.query("select * from comments where id_product =" + id_product + " order by id desc", new CommentRowMapper());
     }
+
+//    public List<Integer> getUserIdForComment(Integer id_product) {
+//        List<Integer> userId = jdbcTemplate.queryForObject("select id_user from comments where id_product = " + id_product,List.class);
+//        return userId;
+//    }
+//
+//    public List<String> getUserNameForComment(List userId) {
+//        List<String> userNames = null;
+//       for ( int i=0; i>userId.size() ; i++) {
+//           String userNameCForCommentFromDatabase = jdbcTemplate.queryForObject("select name from user where id = " + i, String.class);
+//           userNames.add(userNameCForCommentFromDatabase);
+//       }
+//       return userNames;
+//    }
 }

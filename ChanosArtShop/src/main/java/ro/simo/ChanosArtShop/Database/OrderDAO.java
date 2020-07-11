@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -23,9 +24,9 @@ public class OrderDAO {
             Product product = productDAO.findById(entry.getKey());
             totalPrice = totalPrice + (product.getPrice() * entry.getValue());
         }
-
-
-        jdbcTemplate.update("insert into orders values(null, ?,?,?)", userId, null, totalPrice);
+        LocalDateTime dateTime = LocalDateTime.now();
+        String date = dateTime.getYear()+" "+dateTime.getMonth()+" "+dateTime.getDayOfMonth()+" ~ "+dateTime.getHour()+":"+ dateTime.getMinute();
+        jdbcTemplate.update("insert into orders values(null, ?,?,?,?)", userId, null, totalPrice, date);
 
         int orderId = jdbcTemplate.queryForObject("select max(id) from orders", Integer.class);
 

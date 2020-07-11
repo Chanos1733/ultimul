@@ -13,7 +13,7 @@ public class OrderRowMapper implements RowMapper<Order> {
         order.setAddress(resultSet.getString("address"));
         order.setPrice(resultSet.getDouble("total_price"));
         order.setUserId(resultSet.getInt("user_id"));
-        //order.setDate(resultSet.getString("date"));
+        order.setDate(resultSet.getString("date"));
 
         return order;
     }

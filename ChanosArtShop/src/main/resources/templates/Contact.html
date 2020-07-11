@@ -45,16 +45,18 @@
     <div style="height: 10%;">
         <div class="topnav fixed-top">
             <a href="cart">Cos de cumparaturi (<span th:text="${shoppingCartSize}"></span>)</a>
-            <a th:if="${logged}" href="ordersHistory"><span th:text="${history}"></span></a>
-            <!--daca e logat, cos, daca nu, login-->
-            <a th:if="${!logged}" href="index.html"><span th:text="${login}"></span></a>
-            <a href="Contact">Contact</a>
+            <a th:if="${logged==true}" href="ordersHistory">Istoric de comenzi<span th:text="${history}"></span></a>
+            <a th:if="${logged==true}" href="logout">Logout</a>
+            <a th:if="${logged==false}" href="index.html">Login</a>
+            <a href="Contact" class="active">Contact</a>
             <a href="About">Despre</a>
-            <a href="dashboard" class="active">Acasă</a>
-            <img class="mr-sm-4" src="img/Imagini/Doar-flori.png" style="padding-left: 5px; padding-top: 2px; ">
-            <input type="text" placeholder="Search" aria-label="Search" style="width: 200px; border-radius: 7px;">
-            <button class="btn btn-outline-white btn-sm my-0" type="submit" style="border-radius: 7px;"><i
-                    class="fas fa-search"></i></button>
+            <a href="dashboard">Acasă</a>
+            <form action="/search" method="post">
+                <img class="mr-sm-4" src="img/Imagini/Doar-flori.png" style="padding-left: 5px; padding-top: 2px; ">
+                <input type="text" placeholder="Search" aria-label="Search" style="width: 200px; border-radius: 7px;" name="cautat" th:value="${cautat}">
+                <button class="btn btn-outline-white btn-sm my-0" type="submit" style="border-radius: 7px;"><i
+                        class="fas fa-search"></i></button>
+            </form>
         </div>
     </div>
 </div>
@@ -83,7 +85,6 @@
                     <!--Grid column-->
                     <div class="col-md-3 text-center col-lg-12"  style="padding-bottom: 50px;">
                         <ul class="list-unstyled mb-0">
-
 
                             <li style="float: left; padding-right: 30%;"><i class="fas fa-phone fa-4x"></i>
                                 <h3>+40 733 532 594</h3>

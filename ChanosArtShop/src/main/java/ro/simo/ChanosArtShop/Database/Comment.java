@@ -1,15 +1,22 @@
 package ro.simo.ChanosArtShop.Database;
 
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 
 public class Comment {
 
     private int id;
     private int id_product;
     private int id_user;
-    private LocalDateTime date;
+    private String date;
     private String comment;
+
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
 
     public int getId() {
         return id;
@@ -35,22 +42,11 @@ public class Comment {
         this.id_user = id_user;
     }
 
-    public LocalDateTime getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDateTime date) {
-        this.date = date;
-    }
-
     public String getComment() {
         return comment;
     }
 
     public void setComment(String comment) {
         this.comment = comment;
-    }
-
-    public void setDate(Timestamp date) {
     }
 }

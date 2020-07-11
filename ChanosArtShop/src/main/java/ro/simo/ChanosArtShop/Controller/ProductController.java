@@ -6,11 +6,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import ro.simo.ChanosArtShop.Database.OrderDAO;
-import ro.simo.ChanosArtShop.Database.Product;
-import ro.simo.ChanosArtShop.Database.ProductDAO;
+import ro.simo.ChanosArtShop.Database.*;
 import ro.simo.ChanosArtShop.Security.UserSession;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -27,23 +26,37 @@ public class ProductController {
     @Autowired
     OrderDAO orderDAO;
 
+    @Autowired
+    CommentDAO commentDAO;
+
+    @Autowired
+    UserDAO userDAO;
+
     @GetMapping("/product")
     public ModelAndView product(@RequestParam("id") Integer id) {
         ModelAndView modelAndView = new ModelAndView("product");
 
         //verific daca utilizatorul este logat sau nu
         boolean logged = false;
-        if(userSession.getUserId() != 0) {
+        if (userSession.getUserId() != 0) {
             logged = true;
         }
-        modelAndView.addObject("logged", logged);
         Product product = productDAO.findById(id);
-        modelAndView.addObject("product", product);
+        List<Comment> comments = commentDAO.findCommentsForProduct(id);
+        modelAndView.addObject("comments", comments);
+
+//        List<String> userNames = commentDAO.getUserNameForComment(commentDAO.getUserIdForComment(id)); //numele din listade comentarii.. nu din userSession
+//
+//        modelAndView.addObject("userNames",userNames);
+
         int productCounter = 0;
         for (int quantityForProduct : userSession.getShoppingCart().values()) {
             productCounter = productCounter + quantityForProduct;
         }
+
         modelAndView.addObject("shoppingCartSize", productCounter);
+        modelAndView.addObject("product", product);
+        modelAndView.addObject("logged", logged);
 
         return modelAndView;
     }
@@ -70,7 +83,7 @@ public class ProductController {
         List<CartProduct> productsFromCart = new ArrayList<>();
         //verific daca utilizatorul este logat sau nu
         boolean logged = false;
-        if(userSession.getUserId() != 0) {
+        if (userSession.getUserId() != 0) {
             logged = true;
         }
         modelAndView.addObject("logged", logged);
@@ -121,7 +134,6 @@ public class ProductController {
             return modelAndView;
         }
     }
-
 
 
 }

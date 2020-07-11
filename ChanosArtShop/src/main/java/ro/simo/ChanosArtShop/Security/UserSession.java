@@ -9,10 +9,21 @@ import java.util.HashMap;
 @SessionScope
 public class UserSession {
     private int userId;
+    private String userEmail;
+
     HashMap<Integer, Integer> shoppingCart = new HashMap<>();
+
 
     public int getUserId() {
         return userId;
+    }
+
+    public String getUserEmail() {
+        return userEmail;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
     }
 
     public void setUserId(int userId) {

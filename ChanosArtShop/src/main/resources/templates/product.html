@@ -46,9 +46,9 @@
     <div style="height: 10%;">
         <div class="topnav fixed-top">
             <a href="cart">Cos de cumparaturi (<span th:text="${shoppingCartSize}"></span>)</a>
-            <a th:if="${logged==true}" href="ordersHistory">Istoric de comenzi<span th:text="${history}"></span></a>
-            <a th:if="${logged==true}" href="logout">Logout</a>
-            <a th:if="${logged==false}" href="index.html">Login</a>
+            <a th:if="${logged}" href="ordersHistory">Istoric de comenzi<span th:text="${history}"></span></a>
+            <a th:if="${logged}" href="logout">Logout</a>
+            <a th:if="${!logged}" href="index.html">Login</a>
             <a href="Contact">Contact</a>
             <a href="About">Despre</a>
             <a href="dashboard">Acasă</a>
@@ -81,13 +81,13 @@
                 <!-- Wrapper for slides -->
                 <div class="carousel-inner"> <!--trebuie puse poze  in folder-->
                     <div class="item active">
-                        <img th:src="${product.photo1}" alt="Los Angeles" style="height: 350px; margin: auto;">
+                        <img th:src="${'/img/Imagini/' + product.photo1}" alt="Los Angeles" style="height: 350px; margin: auto;">
                     </div>
                     <div class="item">
-                        <img th:src="${product.photo2}" alt="Chicago" style="height: 350px; margin: auto;">
+                        <img th:src="${'/img/Imagini/' + product.photo2}" alt="Chicago" style="height: 350px; margin: auto;">
                     </div>
                     <div class="item">
-                        <img th:src="${product.photo3}" alt="New York" style="height: 350px; margin: auto;">
+                        <img th:src="${'/img/Imagini/' + product.photo3}" alt="New York" style="height: 350px; margin: auto;">
                     </div>
                 </div>
 
@@ -137,16 +137,17 @@
 
         <div style=" min-width: 100%; position: static;">
             <div class="info" style="width: 50%;float: left;">
-                <form>
+                <form action="/save-comment">
                     <h2>Adauga un comentariu :</h2>
-                    <h4 style="color: #c50013;" th:if="${!logged}"> Nu puteti posta un comentariu daca nu sunteti
+                    <input name="productId" hidden th:value="${product.id}">
+                    <h4 style="color: #80002f;" th:if="${!logged}"> Nu puteti posta un comentariu daca nu sunteti
                     logat!</h4><br>
                     <input class="form-control" type="text" size="20" placeholder="E-mail"
-                           style="width: 80%; background-color: #A0E0FF">//iau emailul
-                    <p th:text="${message}" style="color: #c50013;">daca nu o fi valid</p>
+                           style="width: 80%; background-color: #A0E0FF" name="email">//iau emailul
+                    <p th:text="${message}" style="color: #c50013;"></p>
 
                     <input class="form-control" type="text" size="20" placeholder="scrie comentariul aici (500)"
-                           style="width: 80%; height: 100px; float: left; background-color: #A0E0FF">
+                           style="width: 80%; height: 100px; float: left; background-color: #A0E0FF" name="comment">
                     <a th:if="${logged}" href="add-comment">
                         <button type="button" class="btn btn-dark"
                                 style="border-radius: 15px; font-size: 14px; float: left;">Trimite
@@ -162,10 +163,11 @@
             <h2>Comentarii:</h2>
             <div data-spy="scroll" data-target="#list-example" data-offset="0" class="scrollspy-example col-8"
                  style="width: 50%;float: left; height: 200px; position: relative; overflow-y: scroll; background-color: #a0e0ff; border-radius: 10px;">
-                <div th:each="x : ${comment}">
-                    <h4 th:text="${x.user_name}"> nume prenume</h4>
-                    <p tx:text="${x.date}">data.20.20</p>
-                    <h5 tx:text="${x.comment}"> comment comment</h5>
+
+                <div th:each="x : ${comments}">
+                    <h4>Userul cu id #<span th:text="${x.id_user}"></span></h4>
+                    <p>data: <span th:text="${x.date}"></span></p>
+                    <h5 th:text="${x.comment}"></h5>
                 </div>
             </div>
         </div>
