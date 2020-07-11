@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -29,4 +30,15 @@ public class CommentDAO {
 //       }
 //       return userNames;
 //    }
+
+    public void addCommentOnProduct(String email, String comment, int id_product) {
+
+
+        Integer id_user = jdbcTemplate.queryForObject("select id from user where email = " + email,Integer.class);
+        LocalDateTime dateTime = LocalDateTime.now();
+        String date = dateTime.getYear()+" "+dateTime.getMonth()+" "+dateTime.getDayOfMonth()+" ~ "+dateTime.getHour()+":"+ dateTime.getMinute();
+        jdbcTemplate.update("INSERT INTO comments (id, id_product, id_user, date, comment) VALUES (null, ?,?,?,?)",
+                id_product, id_user, date, comment
+        );
+    }
 }

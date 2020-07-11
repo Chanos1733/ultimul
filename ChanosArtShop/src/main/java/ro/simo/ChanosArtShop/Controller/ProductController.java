@@ -9,7 +9,6 @@ import org.springframework.web.servlet.ModelAndView;
 import ro.simo.ChanosArtShop.Database.*;
 import ro.simo.ChanosArtShop.Security.UserSession;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -134,6 +133,27 @@ public class ProductController {
             return modelAndView;
         }
     }
+    @GetMapping("/add-comment")
+    public ModelAndView addCommentOnProduct(@RequestParam(value = "email",required=false)String email,
+                                            @RequestParam(value="comment", required = false) String comment,
+                                            @RequestParam(value="productId", required = false) int id_product) {
+        ModelAndView modelAndView = new ModelAndView("product");
+        email = "gfrt@gmail.com";
+        comment = "asd";
+        id_product = 1;
+        boolean logged= false;
+        if (userSession.getUserId() != 0) {
+            logged = true;
+        }
+        modelAndView.addObject("logged", logged);
 
+        if (!email.equals(userSession.getUserEmail())) {
+            modelAndView.addObject("incorrectemail", "Acest email nu este corect!");
+        } else {
+            commentDAO.addCommentOnProduct(email, comment, id_product);
+        }
+
+        return modelAndView;
+    }
 
 }

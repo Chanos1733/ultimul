@@ -81,7 +81,7 @@ public class UserController {
 
         if (email.equals("chanos.art@gmail.com")) {
             User userFromDatabase = userList.get(0);
-            if (userFromDatabase.getPassword().equals(DigestUtils.md5Hex(password))){
+            if (userFromDatabase.getPassword().equals(DigestUtils.md5Hex(password))) {
                 return new ModelAndView("redirect:/admin");
             }
         }
@@ -103,7 +103,7 @@ public class UserController {
         return modelAndView;
     }
 
-    @GetMapping ("/logout")
+    @GetMapping("/logout")
     public ModelAndView logout() {
         userSession.setUserId(0);
         return new ModelAndView("redirect:/index.html");
@@ -119,7 +119,7 @@ public class UserController {
         ModelAndView modelAndView = new ModelAndView("dashboard");
 
         boolean logged = false;
-        if(userSession.getUserId() != 0) {
+        if (userSession.getUserId() != 0) {
             logged = true;
         }
         modelAndView.addObject("logged", logged);
@@ -129,7 +129,7 @@ public class UserController {
         for (int quantityForProduct : userSession.getShoppingCart().values()) {
             productCounter = productCounter + quantityForProduct;
         }
-        modelAndView.addObject("shoppingCartSize", productCounter );
+        modelAndView.addObject("shoppingCartSize", productCounter);
         modelAndView.addObject("product", products);
 
         return modelAndView;
@@ -142,10 +142,10 @@ public class UserController {
 
     @GetMapping("/About")
     public ModelAndView about() {
-        ModelAndView modelAndView= new ModelAndView("About");
+        ModelAndView modelAndView = new ModelAndView("About");
 
         boolean logged = false;
-        if(userSession.getUserId() != 0) {
+        if (userSession.getUserId() != 0) {
             logged = true;
         }
         modelAndView.addObject("logged", logged);
@@ -155,15 +155,15 @@ public class UserController {
         for (int quantityForProduct : userSession.getShoppingCart().values()) {
             productCounter = productCounter + quantityForProduct;
         }
-        modelAndView.addObject("shoppingCartSize", productCounter );
+        modelAndView.addObject("shoppingCartSize", productCounter);
         return modelAndView;
     }
 
     @GetMapping("/Contact")
     public ModelAndView contact() {
-        ModelAndView modelAndView= new ModelAndView("Contact");
+        ModelAndView modelAndView = new ModelAndView("Contact");
         boolean logged = false;
-        if(userSession.getUserId() != 0) {
+        if (userSession.getUserId() != 0) {
             logged = true;
         }
         modelAndView.addObject("logged", logged);
@@ -173,9 +173,10 @@ public class UserController {
         for (int quantityForProduct : userSession.getShoppingCart().values()) {
             productCounter = productCounter + quantityForProduct;
         }
-        modelAndView.addObject("shoppingCartSize", productCounter );
+        modelAndView.addObject("shoppingCartSize", productCounter);
         return modelAndView;
     }
+
     @GetMapping("/ordersHistory")
     public ModelAndView history() {
         List<Order> orders = orderDAO.findOrderForUser(userSession.getUserId());
@@ -183,7 +184,7 @@ public class UserController {
         modelAndView.addObject("orders", orders);
 
         boolean logged = false;
-        if(userSession.getUserId() != 0) {
+        if (userSession.getUserId() != 0) {
             logged = true;
         }
         modelAndView.addObject("logged", logged);
@@ -193,22 +194,22 @@ public class UserController {
         for (int quantityForProduct : userSession.getShoppingCart().values()) {
             productCounter = productCounter + quantityForProduct;
         }
-        modelAndView.addObject("shoppingCartSize", productCounter );
+        modelAndView.addObject("shoppingCartSize", productCounter);
         return modelAndView;
     }
 
-    @PostMapping ("/search")
-    public ModelAndView search(@RequestParam ("cautat") String cautat) {
+    @PostMapping("/search")
+    public ModelAndView search(@RequestParam("cautat") String cautat) {
         ModelAndView modelAndView = new ModelAndView("dashboard");
         List<Product> products = productDAO.searchProduct(cautat);
         for (Product p : products) {
             p.setUrl("product?id=" + p.getId());
         }
-        if(products.size()==0) {
-            modelAndView.addObject("noResult","Nu s-a gasit nici un rezultat!");
+        if (products.size() == 0) {
+            modelAndView.addObject("noResult", "Nu s-a gasit nici un rezultat!");
         }
         boolean logged = false;
-        if(userSession.getUserId() != 0) {
+        if (userSession.getUserId() != 0) {
             logged = true;
         }
         modelAndView.addObject("logged", logged);
@@ -216,5 +217,6 @@ public class UserController {
         modelAndView.addObject("product", products);
         return modelAndView;
     }
+
 
 }
