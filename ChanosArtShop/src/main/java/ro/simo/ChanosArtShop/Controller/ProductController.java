@@ -133,15 +133,16 @@ public class ProductController {
             return modelAndView;
         }
     }
+
     @GetMapping("/add-comment")
-    public ModelAndView addCommentOnProduct(@RequestParam(value = "email",required=false)String email,
-                                            @RequestParam(value="comment", required = false) String comment,
-                                            @RequestParam(value="productId", required = false) int id_product) {
-        ModelAndView modelAndView = new ModelAndView("product");
-        email = "gfrt@gmail.com";
-        comment = "asd";
-        id_product = 1;
-        boolean logged= false;
+    public ModelAndView addCommentOnProduct(@RequestParam(value = "email", required = false) String email,
+                                            @RequestParam(value = "comment", required = false) String comment,
+                                            @RequestParam(value = "productId", required = false) Integer id) {
+        ModelAndView modelAndView = new ModelAndView("redirect:product?id=" + id);
+//        email = "gfrt@gmail.com";
+//        comment = "asd";
+//        id_product = 1;
+        boolean logged = false;
         if (userSession.getUserId() != 0) {
             logged = true;
         }
@@ -150,9 +151,10 @@ public class ProductController {
         if (!email.equals(userSession.getUserEmail())) {
             modelAndView.addObject("incorrectemail", "Acest email nu este corect!");
         } else {
-            commentDAO.addCommentOnProduct(email, comment, id_product);
+            commentDAO.addCommentOnProduct(email, comment, id);
         }
-
+        Product product = productDAO.findById(id);
+        modelAndView.addObject("product", product);
         return modelAndView;
     }
 

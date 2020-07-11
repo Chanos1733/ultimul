@@ -149,12 +149,12 @@
                     <input class="form-control" type="text" size="20" placeholder="scrie comentariul aici (500)"
                            style="width: 80%; height: 100px; float: left; background-color: #A0E0FF" name="comment" th:value="${comment}">
                     <a th:if="${logged}" href="add-comment">
-                        <button type="button" class="btn btn-dark"
+                        <button type="submit" class="btn btn-dark"
                                 style="border-radius: 15px; font-size: 14px; float: left;">Trimite
                         </button>
                     </a>
                     <a th:if="${!logged}" href="index.html">
-                        <button type="submit" class="btn btn-dark"
+                        <button type="button" class="btn btn-dark"
                                 style="border-radius: 15px; font-size: 14px; float: left;">Login
                         </button>
                     </a>
