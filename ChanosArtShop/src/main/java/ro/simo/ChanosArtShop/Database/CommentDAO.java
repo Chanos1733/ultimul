@@ -31,7 +31,7 @@ public class CommentDAO {
 //       return userNames;
 //    }
 
-    public void addCommentOnProduct(String email, String comment, int id_product) {
+    public void addCommentOnProduct(String email, String comment, Integer id_product) {
 
 
         Integer id_user = jdbcTemplate.queryForObject("select * from user where email='" + email + "';",Integer.class);

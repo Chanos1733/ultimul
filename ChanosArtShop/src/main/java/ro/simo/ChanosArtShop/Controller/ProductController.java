@@ -148,14 +148,42 @@ public class ProductController {
         }
         modelAndView.addObject("logged", logged);
 
-        if (!email.equals(userSession.getUserEmail())) {
-            modelAndView.addObject("incorrectemail", "Acest email nu este corect!");
-        } else {
+        if (email.equals(userSession.getUserEmail())) {
             commentDAO.addCommentOnProduct(email, comment, id);
+        } else {
+            modelAndView.addObject("incorrectEmail", "Acest email nu este corect!");
         }
         Product product = productDAO.findById(id);
         modelAndView.addObject("product", product);
+
         return modelAndView;
     }
 
+    @GetMapping("/update")
+    public ModelAndView updateCart(@RequestParam(value = "quantity", required = false) Integer quantity) {
+        ModelAndView modelAndView = new ModelAndView("/cart");
+        List<CartProduct> productsFromCart = new ArrayList<>();
+        boolean logged = false;
+        if (userSession.getUserId() != 0) {
+            logged = true;
+        }
+        modelAndView.addObject("logged", logged);
+
+        for (Map.Entry<Integer, Integer> entry : userSession.getShoppingCart().entrySet()) {
+            int productId = entry.getKey();
+            Product productFromDatabase = productDAO.findById(productId);
+            CartProduct cartProduct = new CartProduct();
+            cartProduct.setQuantity(quantity);
+            cartProduct.setId(productFromDatabase.getId());
+            cartProduct.setName(productFromDatabase.getName());
+            cartProduct.setPhoto1(productFromDatabase.getPhoto1());
+            cartProduct.setPhoto2(productFromDatabase.getPhoto2());
+            cartProduct.setPhoto3(productFromDatabase.getPhoto3());
+            cartProduct.setPrice(productFromDatabase.getPrice() * quantity);
+            productsFromCart.add(cartProduct);
+        }
+
+        modelAndView.addObject("products", productsFromCart);
+        return modelAndView;
+    }
 }
