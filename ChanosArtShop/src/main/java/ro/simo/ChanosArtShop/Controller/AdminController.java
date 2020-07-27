@@ -32,27 +32,27 @@ public class AdminController {
     @GetMapping("/admin/products")
     public ModelAndView adminProducts(@RequestParam(value = "pageNumber", defaultValue = "1") Integer pageNumber) {
         ModelAndView modelAndView = new ModelAndView("/admin/products");
-     if (userSession.getUserEmail().equals("chanos.art@gmail.com")) {
-        List<Product> allProducts = productDAO.findAll();
-        List<Product> products = productDAO.findByPage(pageNumber);
-        modelAndView.addObject("products", products);
-        int numberOfPages = 0;
-        for (int i = 0; i < (allProducts.size() / 7) + 1; i++) {
-            numberOfPages = numberOfPages + 1;
-        }
+        if (userSession.getUserEmail().equals("chanos.art@gmail.com")) {
+            List<Product> allProducts = productDAO.findAll();
+            List<Product> products = productDAO.findByPage(pageNumber);
+            modelAndView.addObject("products", products);
+            int numberOfPages = 0;
+            for (int i = 0; i < (allProducts.size() / 7) + 1; i++) {
+                numberOfPages = numberOfPages + 1;
+            }
 
-        if (pageNumber == 1) {
+            if (pageNumber == 1) {
+                modelAndView.addObject("nextPage", "http://localhost:8080/admin/products?pageNumber=" + (pageNumber + 1));
+                return modelAndView;
+            } else if (pageNumber == numberOfPages) {
+                // ar trebui sa scot si butonul de next la ultima pagina
+                //Cum fac asta? :((
+                modelAndView.addObject("prevPage", "http://localhost:8080/admin/products?pageNumber=" + (pageNumber - 1));
+                return modelAndView;
+            }
             modelAndView.addObject("nextPage", "http://localhost:8080/admin/products?pageNumber=" + (pageNumber + 1));
-            return modelAndView;
-        } else if (pageNumber == numberOfPages) {
-            // ar trebui sa scot si butonul de next la ultima pagina
-            //Cum fac asta? :((
             modelAndView.addObject("prevPage", "http://localhost:8080/admin/products?pageNumber=" + (pageNumber - 1));
             return modelAndView;
-        }
-        modelAndView.addObject("nextPage", "http://localhost:8080/admin/products?pageNumber=" + (pageNumber + 1));
-        modelAndView.addObject("prevPage", "http://localhost:8080/admin/products?pageNumber=" + (pageNumber - 1));
-        return modelAndView;
 
         } else {
             return new ModelAndView("redirect:/index.html");
@@ -81,28 +81,36 @@ public class AdminController {
         return productService.saveProduct(name, price, materials, dimensions, color, description, photo1, photo2, photo3);
     }
 
-    /*@GetMapping("admin/edit")
+    @GetMapping("admin/logout")
+    public ModelAndView logoutAdmin() {
+        userSession.setUserId(0);
+        userSession.setUserEmail("");
+        return new ModelAndView("redirect:/index.html");
+    }
+
+    @GetMapping("admin/edit")
     public ModelAndView edit(@RequestParam ("id") Integer productId) {
-        return new ModelAndView("edit-product?id=",productId);
+        return new ModelAndView("admin/edit-product");
     }
 
     @GetMapping("/admin/edit-product")
-    public ModelAndView editProduct(@RequestParam(value = "name", required = false) String name,
-                              @RequestParam(value = "price" , defaultValue = "0") double price,
-                              @RequestParam(value = "materials", required = false) String materials,
-                              @RequestParam(value = "dimensions", required = false) String dimensions,
-                              @RequestParam(value = "color", required = false) String color,
-                              @RequestParam(value = "description", required = false) String description,
-                              @RequestParam(value = "photo1", required = false) String photo1,
-                              @RequestParam(value = "photo2", required = false) String photo2,
-                              @RequestParam(value = "photo3", required = false) String photo3,
-                              @RequestParam(value = "id", defaultValue = "0") Integer productId) {
-        ModelAndView modelAndView = new ModelAndView()
+    public ModelAndView editProduct(@RequestParam(value = "name") String name,
+                              @RequestParam(value = "price" ) double price,
+                              @RequestParam(value = "materials") String materials,
+                              @RequestParam(value = "dimensions") String dimensions,
+                              @RequestParam(value = "color") String color,
+                              @RequestParam(value = "description") String description,
+                              @RequestParam(value = "photo1") String photo1,
+                              @RequestParam(value = "photo2") String photo2,
+                              @RequestParam(value = "photo3") String photo3,
+                              @RequestParam(value = "id") Integer productId) {
+        ModelAndView modelAndView = new ModelAndView("admin/edit-product");
         Product product = productDAO.findById(productId);
         modelAndView.addObject("product", product);
 
-        return productService.editProduct(productId, name, price, materials, dimensions, color, description, photo1, photo2, photo3);
-    }*/
+        productService.editProduct(productId, name, price, materials, dimensions, color, description, photo1, photo2, photo3);
+        return new ModelAndView("admin/products");
+    }
 
 
     @GetMapping("/admin/details")

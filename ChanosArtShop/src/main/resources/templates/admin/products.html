@@ -57,14 +57,6 @@
             setTimeout(deleteResultMessage, 2000);
         }
 
-        // function details(productId) {
-        //     document.getElementById("detailsButton").onclick = function () {
-        //         location.href = "http://localhost:8080/admin/details-product?id=" + productId;
-        //     };
-        // }
-        // function detailsProduct(productId) {
-        //     $.get("http://localhost:8080/admin/details-product?id=" + productId);
-        // }
 
         function deleteResultMessage() {
             $("#result-message").addClass("magictime swashOut");
@@ -108,66 +100,6 @@
             });
         }
 
-        // function sendEditProductRequest() {
-        //     var nameProduct = $("#nameProduct").val();
-        //     var priceProduct = $("#priceProduct").val();
-        //     var materialsProduct = $("#materialsProduct").val();
-        //     var dimensionsProduct = $("#dimensionsProduct").val();
-        //     var colorProduct = $("#colorProduct").val();
-        //     var descriptionProduct = $("#descriptionProduct").val();
-        //     var photo1Product = $("#photo1Product").val();
-        //     var photo2Product = $("#photo2Product").val();
-        //     var photo3Product = $("#photo3Product").val();
-        //
-        //
-        //     var url = "http://localhost:8080/admin/edit-product?name=" + nameProduct +
-        //         "&price=" + priceProduct +
-        //         "&materials=" + materialsProduct +
-        //         "&dimensions=" + dimensionsProduct +
-        //         "&color=" + colorProduct +
-        //         "&description=" + descriptionProduct +
-        //         "&photo1=" + photo1Product +
-        //         "&photo2=" + photo2Product +
-        //         "&photo3=" + photo3Product;
-        //
-        //     //Folosesc AJAX ca sa comunic cu serverul
-        //     $.post(url, function (data) {
-        //         $("#result-message").html(data);
-        //         $("#result-message").removeClass("magictime swashOut");
-        //         $("#result-message").show();
-        //         setTimeout(deleteResultMessage, 2000);
-        //         $("#form-add").toggle();
-        //     });
-        // }
-
-
-        // function nextPage() {
-        //     $.get("http://localhost:8080/admin/products-paginated?pageNumber=" + pageNumber, function (data) {
-        //         for (var i = 0; i < data.length; i++) {
-        //             alert(data[i].name);
-        //             var nameProduct = $("#nameProduct").val();
-        //             var priceProduct = $("#priceProduct").val();
-        //             var materialsProduct = $("#materialsProduct").val();
-        //             var dimensionsProduct = $("#dimensionsProduct").val();
-        //             var colorProduct = $("#colorProduct").val();
-        //             var descriptionProduct = $("#descriptionProduct").val();
-        //             var photo1Product = $("#photo1Product").val();
-        //             var photo2Product = $("#photo2Product").val();
-        //             var photo3Product = $("#photo3Product").val();
-        //             //sterg elementele din tabel, pun altele noi
-        //             document.removeAttribute(nameProduct);
-        //             document.removeAttribute(priceProduct);
-        //             document.removeAttribute(materialsProduct);
-        //             document.removeAttribute(dimensionsProduct);
-        //             document.removeAttribute(colorProduct);
-        //             document.removeAttribute(descriptionProduct);
-        //             document.removeAttribute(photo1Product);
-        //             document.removeAttribute(photo2Product);
-        //             document.removeAttribute(photo3Product);
-        //         }
-        //     });
-        // }
-
     </script>
 </head>
 <body style="font-family: 'Patrick Hand', cursive;  background-image: linear-gradient(#87658b 25%, #49ab6b 100%); background-repeat: no-repeat;background-attachment: fixed;">
@@ -180,6 +112,7 @@
             <!--            <a href="/dashboard">Acasă</a>-->
             <img class="mr-sm-4" src="/img/Imagini/Doar-flori.png" style="padding-left: 5px; padding-top: 2px; ">
             <button type="button" class="btn" style="color: #9ccc65;" onclick="toggleFormAdd();">Adauga produs</button>
+            <a href="logout">Logout</a>
             <a href="/admin/products">Toate produsele</a>
             <form action="/search-admin" method="post" style="float: right; margin-top: 15px;">
                 <input type="text" placeholder="Search" aria-label="Search" style="width: 200px; border-radius: 7px;"
@@ -294,16 +227,15 @@
                     <td th:text="${p.photo1}"></td>
                     <td th:text="${p.photo2}"></td>
                     <td th:text="${p.photo3}"></td>
-                    <td><form action="/admin/details">
-                        <input name="id" th:value="${p.id}" hidden>
-
-                        <button type="submit" class="btn btn-outline-primary" id="detailsButton"
-                        ><!-- th:id="${p.id}"   onclick="details(this.id);"-->Detalii
-                        </button>
-                    </form>form>
+                    <td>
+                        <form action="/admin/details">
+                            <input name="id" th:value="${p.id}" hidden>
+                            <button type="submit" class="btn btn-outline-primary" id="detailsButton">Detalii
+                            </button>
+                        </form>
                     </td>
                     <td>
-                        <form action="/admin/edit-product" method="get">
+                        <form action="/admin/edit" method="get">
                             <input name="id" th:value="${p.id}" hidden>
                             <button type="submit" class="btn btn-outline-warning">
                                 <!--th:id="${p.id}"  onclick="sendEditProductRequest();"-->Editare
