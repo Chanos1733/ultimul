@@ -28,6 +28,6 @@ public class UserService {
     public List<User> findByEmail(String email) {
         return userDAO.findByEmail(email);
     }
-    
+
 
 }

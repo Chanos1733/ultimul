@@ -63,7 +63,6 @@ public class UserController {
                 return modelAndView;
             }
         }
-
         //redirect user catre login
         return new ModelAndView("redirect:/index.html");
     }
@@ -82,7 +81,7 @@ public class UserController {
         if (email.equals("chanos.art@gmail.com")) {
             User userFromDatabase = userList.get(0);
             if (userFromDatabase.getPassword().equals(DigestUtils.md5Hex(password))) {
-                return new ModelAndView("redirect:/admin");
+                return new ModelAndView("redirect:/admin/products");
             }
         }
         if (userList.size() == 0) {
@@ -96,6 +95,7 @@ public class UserController {
             if (!userFromDatabase.getPassword().equals(DigestUtils.md5Hex(password))) {
                 modelAndView.addObject("message", "Credentialele nu sunt corecte!");
             } else { //a introdus credentialele cu succes
+                userSession.setUserEmail(userFromDatabase.getEmail());
                 userSession.setUserId(userFromDatabase.getId());
                 modelAndView = new ModelAndView("redirect:/dashboard");
             }

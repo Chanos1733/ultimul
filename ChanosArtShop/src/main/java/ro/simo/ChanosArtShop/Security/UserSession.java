@@ -11,6 +11,7 @@ public class UserSession {
     private int userId;
     private String userEmail;
 
+
     HashMap<Integer, Integer> shoppingCart = new HashMap<>();
 
 
@@ -48,16 +49,7 @@ public class UserSession {
         }
     }
 
-    public void getShoppingCartForProduct(Integer id, Integer quantityFromCart) {//product id
-        if(shoppingCart.get(id) != null) {
-            int currentQuantity = shoppingCart.get(id);
-            int newQuantity = currentQuantity + quantityFromCart;
-            shoppingCart.put(id, newQuantity);
-        } else {
-            shoppingCart.put(id, 1);
-        }
 
-    }
 
 
 //    public void addComment

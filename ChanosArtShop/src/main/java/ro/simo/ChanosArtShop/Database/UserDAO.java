@@ -19,6 +19,11 @@ public class UserDAO {
     public List<User> findByName(String name) {
         return jdbcTemplate.query("select * from user where name='" + name + "';", new UserRowMapper());
     }
+    public List<String> findNameInCommentsByProductId(Integer id) {//id al produsului curent
+        while(true) {
+        return jdbcTemplate.queryForObject("select name from user where id=(select user_id from comments where id_product=" + id + ";", List.class);
+    }
+    }
 
     public void create( String name,String country, String city, String adress,String phone, String email,String password) {
        jdbcTemplate.update("insert into user values (null,?,?,?,?,?,?,?)", name, country, city, adress, phone, email, password);

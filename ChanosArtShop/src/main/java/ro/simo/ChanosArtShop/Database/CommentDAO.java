@@ -33,10 +33,9 @@ public class CommentDAO {
 
     public void addCommentOnProduct(String email, String comment, Integer id_product) {
 
-
-        Integer id_user = jdbcTemplate.queryForObject("select * from user where email='" + email + "';",Integer.class);
+        Integer id_user = jdbcTemplate.queryForObject("select id from user where email='" + email + "';", Integer.class);
         LocalDateTime dateTime = LocalDateTime.now();
-        String date = dateTime.getYear()+" "+dateTime.getMonth()+" "+dateTime.getDayOfMonth()+" ~ "+dateTime.getHour()+":"+ dateTime.getMinute();
+        String date = dateTime.getYear() + " " + dateTime.getMonth() + " " + dateTime.getDayOfMonth() + " ~ " + dateTime.getHour() + ":" + dateTime.getMinute();
         jdbcTemplate.update("INSERT INTO comments (id, id_product, id_user, date, comment) VALUES (null, ?,?,?,?)",
                 id_product, id_user, date, comment
         );

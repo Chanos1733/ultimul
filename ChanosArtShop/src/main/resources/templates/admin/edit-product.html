@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en" style="height: auto;">
+<head>
+
+    <meta charset="UTF-8">
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <title>Admin</title>
+    <link rel="stylesheet" type="text/css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <!-- CHANOS ART icon -->
+    <link href="/Doar-flori-pagina-sus.png" rel="icon" type="image/x-icon">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+    <!-- Google Fonts Roboto -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+    <!-- pentru font awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link href="/css/gradient buttons .css" rel="stylesheet" type="text/css">
+    <link href="/css/parti componente header.css" rel="stylesheet" type="text/css">
+    <link href="../css/magic.min.css" rel="stylesheet">
+    <link href="../css/mdb.min.css" rel="stylesheet" type="text/css">
+    <link href="../css/style.css" rel="stylesheet" type="text/css">
+    <link href="../css/CSS trebuie LOGIN.css" rel="stylesheet" type="text/css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+        .magictime {
+            animation-duration: 2s;
+        }
+    </style>
+
+    <script>
+
+        function deleteResultMessage() {
+            $("#result-message").addClass("magictime swashOut");
+        }
+
+        function sendEditProductRequest() {
+            var nameProduct = $("#nameProduct").val();
+            var priceProduct = $("#priceProduct").val();
+            var materialsProduct = $("#materialsProduct").val();
+            var dimensionsProduct = $("#dimensionsProduct").val();
+            var colorProduct = $("#colorProduct").val();
+            var descriptionProduct = $("#descriptionProduct").val();
+            var photo1Product = $("#photo1Product").val();
+            var photo2Product = $("#photo2Product").val();
+            var photo3Product = $("#photo3Product").val();
+
+
+            var url = "http://localhost:8080/admin/edit-product?name=" + nameProduct +
+                "&price=" + priceProduct +
+                "&materials=" + materialsProduct +
+                "&dimensions=" + dimensionsProduct +
+                "&color=" + colorProduct +
+                "&description=" + descriptionProduct +
+                "&photo1=" + photo1Product +
+                "&photo2=" + photo2Product +
+                "&photo3=" + photo3Product;
+
+            //Folosesc AJAX ca sa comunic cu serverul
+            $.post(url, function (data) {
+                $("#result-message").html(data);
+                $("#result-message").removeClass("magictime swashOut");
+                $("#result-message").show();
+                setTimeout(deleteResultMessage, 2000);
+                $("#form-add").toggle();
+            });
+        }
+
+    </script>
+</head>
+<body style="font-family: 'Patrick Hand', cursive;  background-image: linear-gradient(#87658b 25%, #49ab6b 100%); background-repeat: no-repeat;background-attachment: fixed;">
+
+
+<div class="nav ">
+    <div style="height: 10%;">
+        <div class="topnav fixed-top">
+            <a href="/admin/products">Inapoi</a>
+            <img class="mr-sm-4" src="/img/Imagini/Doar-flori.png" style="padding-left: 5px; padding-top: 2px; ">
+        </div>
+    </div>
+</div>
+<div style="padding-top: 56px; ">
+
+    <div style="width: 100% !important;">
+        <div class="shop-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center" style="max-width: 700px;">
+            <h1 class="display-4">Administrare produse</h1>
+        </div>
+
+        <div class="container" style="max-width: 960px;">
+
+            <div class="alert alert-success" role="alert" id="result-message" style="display: none">
+            </div>
+
+
+            <form id="form-add" >
+                <div class="form-group">
+                    <label for="nameProduct">Nume</label>
+                    <input type="text" class="form-control" id="nameProduct" th:text="${product.name}">
+                </div>
+                <div style="width: 48%; float: left;">
+                    <div class="form-group">
+                        <label for="priceProduct">Pret</label>
+                        <input type="number" class="form-control" id="priceProduct" th:text="${product.price}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="materialsProduct">Materiale</label>
+                        <input type="text" class="form-control" id="materialsProduct">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="dimensionsProduct">Dimensiuni</label>
+                        <input type="text" class="form-control" id="dimensionsProduct">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="colorProduct">Culoare</label>
+                        <input type="text" class="form-control" id="colorProduct">
+                    </div>
+                </div>
+                <div style="width: 4%; float: left;"><p></p></div>
+                <div style="width: 48%; float: left;">
+                    <div class="form-group">
+                        <label for="descriptionProduct">Descriere</label>
+                        <input type="text" class="form-control" id="descriptionProduct">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="photo1Product">Poza 1</label>
+                        <input type="text" class="form-control" id="photo1Product">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="photo2Product">Poza 2</label>
+                        <input type="text" class="form-control" id="photo2Product">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="photo3Product">Poza 3</label>
+                        <input type="text" class="form-control" id="photo3Product">
+                    </div>
+                </div>
+                <button type="button" class="btn " onclick="sendEditProductRequest();">Salveaza</button>
+            </form>
+
+        </div>
+    </div>
+    <div class="bottomside">
+        <h4 style="padding-left: 45%; padding-top: 20px;">© Chanos Art 2020 </h4>
+    </div>
+</div>
+
+</body>
+</html>

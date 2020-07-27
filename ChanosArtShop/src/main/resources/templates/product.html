@@ -134,18 +134,17 @@
             </div>
             &nbsp;&nbsp;
         </div>
-
         <div style=" min-width: 100%; position: static;">
             <div class="info" style="width: 50%;float: left;">
                 <form action="/add-comment" method="get" >
                     <h2>Adauga un comentariu :</h2>
                     <input name="productId" hidden th:value="${product.id}">
+                    <h5 style="color: #80002f;" th:if="${mesaj == false}">Acest Email nu este corect</h5>
+                    <h5 style="color: #80002f;" th:if="${mesaj == true}">Multumim pentru feedback! :)</h5>
                     <h4 style="color: #80002f;" th:if="${!logged}"> Nu puteti posta un comentariu daca nu sunteti
-                    logat!</h4><br>
+                        logat!</h4><br>
                     <input class="form-control" type="text" size="20" placeholder="E-mail"
-                           style="width: 80%; background-color: #A0E0FF" name="email" th:value="${email}">
-                    <p th:text="${incorrectEmail}" style="color: #c50013;"></p>
-
+                           style="width: 80%; background-color: #A0E0FF" name="email" th:value="${email}"><br>
                     <input class="form-control" type="text" size="20" placeholder="scrie comentariul aici (500)"
                            style="width: 80%; height: 100px; float: left; background-color: #A0E0FF" name="comment" th:value="${comment}">
                     <a th:if="${logged}" href="add-comment">
@@ -168,8 +167,10 @@
                     <h4>Userul cu id #<span th:text="${x.id_user}"></span></h4>
                     <p>data: <span th:text="${x.date}"></span></p>
                     <h5 th:text="${x.comment}"></h5>
+                    <hr class="featurette-divider">
                 </div>
             </div>
+
         </div>
     </div>
 

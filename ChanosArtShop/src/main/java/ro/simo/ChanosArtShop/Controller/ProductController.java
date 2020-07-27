@@ -44,9 +44,9 @@ public class ProductController {
         List<Comment> comments = commentDAO.findCommentsForProduct(id);
         modelAndView.addObject("comments", comments);
 
-//        List<String> userNames = commentDAO.getUserNameForComment(commentDAO.getUserIdForComment(id)); //numele din listade comentarii.. nu din userSession
+//        List<String> userNames =  //numele din lista de comentarii.. nu din userSession
 //
-//        modelAndView.addObject("userNames",userNames);
+//        modelAndView.addObject("userNames",userName);
 
         int productCounter = 0;
         for (int quantityForProduct : userSession.getShoppingCart().values()) {
@@ -118,9 +118,12 @@ public class ProductController {
 
         //salvam in baza de date cosul de cumparaturi
         orderDAO.newOrder(userSession.getUserId(), userSession.getShoppingCart());
-
-        //verific daca utilizatorul este logat sau nu
-
+        double totalPrice = 0;
+        for (Map.Entry<Integer, Integer> entry : userSession.getShoppingCart().entrySet()) {
+            Product product = productDAO.findById(entry.getKey());
+            totalPrice = totalPrice + (product.getPrice() * entry.getValue());
+        }
+        modelAndView.addObject("totalPrice",totalPrice);
         boolean logged = false;
 
         if (userSession.getUserId() == 0) {
@@ -135,31 +138,33 @@ public class ProductController {
     }
 
     @GetMapping("/add-comment")
-    public ModelAndView addCommentOnProduct(@RequestParam(value = "email", required = false) String email,
-                                            @RequestParam(value = "comment", required = false) String comment,
-                                            @RequestParam(value = "productId", required = false) Integer id) {
+    public ModelAndView addCommentOnProduct(@RequestParam(value = "email") String email,
+                                            @RequestParam(value = "comment") String comment,
+                                            @RequestParam(value = "productId") Integer id) {
         ModelAndView modelAndView = new ModelAndView("redirect:product?id=" + id);
-//        email = "gfrt@gmail.com";
-//        comment = "asd";
-//        id_product = 1;
+
         boolean logged = false;
         if (userSession.getUserId() != 0) {
             logged = true;
         }
         modelAndView.addObject("logged", logged);
 
-        if (email.equals(userSession.getUserEmail())) {
-            commentDAO.addCommentOnProduct(email, comment, id);
+        boolean mesaj;
+        if (!email.equals(userSession.getUserEmail())) {
+            mesaj = false;
         } else {
-            modelAndView.addObject("incorrectEmail", "Acest email nu este corect!");
+            mesaj = true;
+            commentDAO.addCommentOnProduct(email, comment, id);
         }
+//
         Product product = productDAO.findById(id);
         modelAndView.addObject("product", product);
+        modelAndView.addObject("mesaj", mesaj);
 
         return modelAndView;
     }
 
-    @GetMapping("/update")
+    @GetMapping("/update-cart")
     public ModelAndView updateCart(@RequestParam(value = "quantity", required = false) Integer quantity) {
         ModelAndView modelAndView = new ModelAndView("/cart");
         List<CartProduct> productsFromCart = new ArrayList<>();

@@ -53,7 +53,8 @@
             <a href="dashboard" class="active">Acasă</a>
             <form action="/search" method="post">
                 <img class="mr-sm-4" src="img/Imagini/Doar-flori.png" style="padding-left: 5px; padding-top: 2px; ">
-                <input type="text" placeholder="Search" aria-label="Search" style="width: 200px; border-radius: 7px;" name="cautat" th:value="${cautat}">
+                <input type="text" placeholder="Search" aria-label="Search" style="width: 200px; border-radius: 7px;"
+                       name="cautat" th:value="${cautat}">
                 <button class="btn btn-outline-white btn-sm my-0" type="submit" style="border-radius: 7px;"><i
                         class="fas fa-search"></i></button>
             </form>
@@ -107,40 +108,42 @@
             <div style="width: 100%;">
                 <div><h1 style="color : #80002f; position: fixed;" th:text="${noResult}"></h1></div>
                 <div class="card-deck mb-3 text-center"
-                     style="max-width: 300px; min-width: 250px; flex-flow: nowrap !important;">
-
-                    <div th:each="x : ${product}" class="card mb-4 shadow-sm"
-                         style="max-width: 300px; min-width: 250px; float: left; background-color: #A0E0FF; border-radius: 23px;">
-                        <!--   -->
-                        <div class="card-header">
-                            <img th:src="${'/img/Imagini/' + x.photo1}"
-                                 style=" max-width: 200px; max-height: 200px;">
+                     style="width: 270px; ">
+                    <div style="min-width: 1275px;">
+                        <div th:each="x : ${product}" class="card mb-4 shadow-sm"
+                             style="width: 225px; height: 395px; float:left; background-color: #A0E0FF; border-radius: 22px;">
                             <!--   -->
+                            <div class="card-header">
+                                <img th:src="${'/img/Imagini/' + x.photo1}"
+                                     style=" max-width: 200px; max-height: 200px; border-radius: 22px;">
+                                <!--   -->
 
-                        </div>
-                        <div class="card-body">
-                            <h3 class="my-0 font-weight-normal" th:text="${x.name}"><!--    --> </h3>
-                            <h1 class="card-title pricing-card-title"><span th:text="${x.price}"></span> RON</h1>
-                            <form action="/product" method="get">
-                                <input name="id" th:value="${x.id}" hidden><!--  -->
-                                <a th:href="${x.url}">
-                                    <button class="btn btn-dark"
-                                            style="border-radius: 15px; font-size: 14px; float: left;width: -webkit-fill-available;">
-                                        Detalii
-                                    </button>
-                                </a>
-                            </form>
-                            <form action="/add-to-cart-dash" method="post">
-                                <input name="productId" th:value="${x.id}" hidden><!--  -->
-                                <a>
-                                    <button type="submit" class="btn btn-dark"
-                                            style="border-radius: 15px; font-size: 14px; float: left;width: -webkit-fill-available;">
+                            </div>
+                            <div class="card-body">
+                                <h3 class="my-0 font-weight-normal" th:text="${#strings.abbreviate(x.name,20)}">
+                                    <!--    --> </h3>
+                                <h1 class="card-title pricing-card-title"><span th:text="${x.price}"></span> RON</h1>
+                                <form action="/product" method="get">
+                                    <input name="id" th:value="${x.id}" hidden><!--  -->
+                                    <a th:href="${x.url}">
+                                        <button class="btn btn-dark"
+                                                style="border-radius: 15px; font-size: 14px; float: left;width: -webkit-fill-available;">
+                                            Detalii
+                                        </button>
+                                    </a>
+                                </form>
+                                <form action="/add-to-cart-dash" method="post">
+                                    <input name="productId" th:value="${x.id}" hidden><!--  -->
+                                    <a>
+                                        <button type="submit" class="btn btn-dark"
+                                                style="border-radius: 15px; font-size: 14px; float: left;width: -webkit-fill-available;">
 
-                                        Adauga in coș
-                                    </button>
-                                </a>
-                            </form>
+                                            Adauga in coș
+                                        </button>
+                                    </a>
+                                </form>
 
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -148,7 +151,7 @@
         </div>
 
     </div>
-    <div class="rightside"><p></p></div>
+
 </div>
 
 <div class="bottomside" style="bottom: 0;">
