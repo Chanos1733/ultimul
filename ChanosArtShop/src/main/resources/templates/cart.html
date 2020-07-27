@@ -83,10 +83,10 @@
                                 th:src="${'/img/Imagini/' + x.photo3}" style="height: 50px;">&nbsp;&nbsp;&nbsp;<span
                                 style="font-size: x-large;" th:text="${x.name}"></span>
                         </li>
-                        <form action="/update" method="get">
+                        <form action="/update-cart" method="get">
                             <input class="item-quantity qty k-valid" type="number" style="width: 50px;" name="quantity"
                                    th:value="${x.quantity}">&nbsp;
-                            <a href="/update"><small>Actualizează</small></a>
+                            <button>Actualizează</button>
                         </form>
                     </ul>
                 </div>

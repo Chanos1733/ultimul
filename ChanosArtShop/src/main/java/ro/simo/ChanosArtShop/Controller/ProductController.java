@@ -56,6 +56,7 @@ public class ProductController {
         modelAndView.addObject("shoppingCartSize", productCounter);
         modelAndView.addObject("product", product);
         modelAndView.addObject("logged", logged);
+        modelAndView.addObject("mesaj", false);
 
         return modelAndView;
     }
@@ -78,7 +79,7 @@ public class ProductController {
 
     @GetMapping("/cart")
     public ModelAndView shoppingCart() {
-        ModelAndView modelAndView = new ModelAndView("/cart");
+        ModelAndView modelAndView = new ModelAndView("cart");
         List<CartProduct> productsFromCart = new ArrayList<>();
         //verific daca utilizatorul este logat sau nu
         boolean logged = false;
@@ -166,7 +167,7 @@ public class ProductController {
 
     @GetMapping("/update-cart")
     public ModelAndView updateCart(@RequestParam(value = "quantity", required = false) Integer quantity) {
-        ModelAndView modelAndView = new ModelAndView("/cart");
+        ModelAndView modelAndView = new ModelAndView("cart");
         List<CartProduct> productsFromCart = new ArrayList<>();
         boolean logged = false;
         if (userSession.getUserId() != 0) {

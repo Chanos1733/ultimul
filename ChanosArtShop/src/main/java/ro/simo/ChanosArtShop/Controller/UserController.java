@@ -73,7 +73,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ModelAndView index(@RequestParam("email") String email,
+    public ModelAndView login(@RequestParam("email") String email,
                               @RequestParam("password") String password) {
         ModelAndView modelAndView = new ModelAndView("index");
         List<User> userList = userService.findByEmail(email);
@@ -81,6 +81,8 @@ public class UserController {
         if (email.equals("chanos.art@gmail.com")) {
             User userFromDatabase = userList.get(0);
             if (userFromDatabase.getPassword().equals(DigestUtils.md5Hex(password))) {
+                userSession.setUserEmail(userFromDatabase.getEmail());
+                userSession.setUserId(userFromDatabase.getId());
                 return new ModelAndView("redirect:/admin/products");
             }
         }
@@ -106,6 +108,7 @@ public class UserController {
     @GetMapping("/logout")
     public ModelAndView logout() {
         userSession.setUserId(0);
+        userSession.setUserEmail("");
         return new ModelAndView("redirect:/index.html");
     }
 

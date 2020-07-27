@@ -139,8 +139,8 @@
                 <form action="/add-comment" method="get" >
                     <h2>Adauga un comentariu :</h2>
                     <input name="productId" hidden th:value="${product.id}">
-                    <h5 style="color: #80002f;" th:if="${mesaj == false}">Acest Email nu este corect</h5>
-                    <h5 style="color: #80002f;" th:if="${mesaj == true}">Multumim pentru feedback! :)</h5>
+                    <h5 style="color: #80002f;" th:if="${!mesaj}">Acest Email nu este corect</h5>
+                    <h5 style="color: #80002f;" th:if="${mesaj}">Multumim pentru feedback! :)</h5>
                     <h4 style="color: #80002f;" th:if="${!logged}"> Nu puteti posta un comentariu daca nu sunteti
                         logat!</h4><br>
                     <input class="form-control" type="text" size="20" placeholder="E-mail"

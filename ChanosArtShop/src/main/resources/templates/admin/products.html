@@ -294,11 +294,13 @@
                     <td th:text="${p.photo1}"></td>
                     <td th:text="${p.photo2}"></td>
                     <td th:text="${p.photo3}"></td>
-                    <td><a href="details">
+                    <td><form action="/admin/details">
+                        <input name="id" th:value="${p.id}" hidden>
+
                         <button type="submit" class="btn btn-outline-primary" id="detailsButton"
                         ><!-- th:id="${p.id}"   onclick="details(this.id);"-->Detalii
                         </button>
-                    </a>
+                    </form>form>
                     </td>
                     <td>
                         <form action="/admin/edit-product" method="get">

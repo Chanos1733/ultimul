@@ -32,7 +32,7 @@ public class AdminController {
     @GetMapping("/admin/products")
     public ModelAndView adminProducts(@RequestParam(value = "pageNumber", defaultValue = "1") Integer pageNumber) {
         ModelAndView modelAndView = new ModelAndView("/admin/products");
-//        if (userSession.getUserEmail().equals("chanos.art@gmail.com")) {
+     if (userSession.getUserEmail().equals("chanos.art@gmail.com")) {
         List<Product> allProducts = productDAO.findAll();
         List<Product> products = productDAO.findByPage(pageNumber);
         modelAndView.addObject("products", products);
@@ -54,9 +54,9 @@ public class AdminController {
         modelAndView.addObject("prevPage", "http://localhost:8080/admin/products?pageNumber=" + (pageNumber - 1));
         return modelAndView;
 
-//        } else {
-//            return new ModelAndView("redirect:/index.html");
-//        }
+        } else {
+            return new ModelAndView("redirect:/index.html");
+        }
     }
 
 
@@ -81,9 +81,13 @@ public class AdminController {
         return productService.saveProduct(name, price, materials, dimensions, color, description, photo1, photo2, photo3);
     }
 
-    /*@GetMapping("/admin/edit-product")
-    @ResponseBody
-    public String editProduct(@RequestParam(value = "name", required = false) String name,
+    /*@GetMapping("admin/edit")
+    public ModelAndView edit(@RequestParam ("id") Integer productId) {
+        return new ModelAndView("edit-product?id=",productId);
+    }
+
+    @GetMapping("/admin/edit-product")
+    public ModelAndView editProduct(@RequestParam(value = "name", required = false) String name,
                               @RequestParam(value = "price" , defaultValue = "0") double price,
                               @RequestParam(value = "materials", required = false) String materials,
                               @RequestParam(value = "dimensions", required = false) String dimensions,
@@ -93,20 +97,21 @@ public class AdminController {
                               @RequestParam(value = "photo2", required = false) String photo2,
                               @RequestParam(value = "photo3", required = false) String photo3,
                               @RequestParam(value = "id", defaultValue = "0") Integer productId) {
-//        Product product = productDAO.findById(productId);
-//        modelAndView.addObject("product", product);
+        ModelAndView modelAndView = new ModelAndView()
+        Product product = productDAO.findById(productId);
+        modelAndView.addObject("product", product);
 
         return productService.editProduct(productId, name, price, materials, dimensions, color, description, photo1, photo2, photo3);
     }*/
 
 
-//    @GetMapping("/admin/details")
-//    public ModelAndView details(@RequestParam(value = "id") Integer productId) {
-//        ModelAndView modelAndView = new ModelAndView("admin/details?id=" + productId);
-//        Product product = productDAO.findById(productId);
-//        modelAndView.addObject("product", product);
-//        return modelAndView;
-//    }
+    @GetMapping("/admin/details")
+    public ModelAndView details(@RequestParam(value = "id") Integer productId) {
+        ModelAndView modelAndView = new ModelAndView("admin/details");
+        Product product = productDAO.findById(productId);
+        modelAndView.addObject("product", product);
+        return modelAndView;
+    }
 
     @PostMapping("/search-admin")
     public ModelAndView search(@RequestParam("cautat") String cautat) {
