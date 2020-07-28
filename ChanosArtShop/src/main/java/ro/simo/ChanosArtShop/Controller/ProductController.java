@@ -92,10 +92,11 @@ public class ProductController {
             productCounter = productCounter + quantityForProduct;
         }
         modelAndView.addObject("shoppingCartSize", productCounter);
-
+        double totalPrice = 0;
         for (Map.Entry<Integer, Integer> entry : userSession.getShoppingCart().entrySet()) {
             int quantity = entry.getValue();
             int productId = entry.getKey();
+
             Product productFromDatabase = productDAO.findById(productId);
             CartProduct cartProduct = new CartProduct();
             cartProduct.setQuantity(quantity);
@@ -106,8 +107,9 @@ public class ProductController {
             cartProduct.setPhoto3(productFromDatabase.getPhoto3());
             cartProduct.setPrice(productFromDatabase.getPrice() * quantity);
             productsFromCart.add(cartProduct);
+            totalPrice = totalPrice + cartProduct.getPrice();
         }
-
+        modelAndView.addObject("totalPrice", totalPrice);
         modelAndView.addObject("products", productsFromCart);
         return modelAndView;
     }
@@ -150,7 +152,7 @@ public class ProductController {
 
         String email = userSession.getUserEmail();
         String user_name = userSession.getName();
-        commentDAO.addCommentOnProduct(email, comment, id,user_name);
+        commentDAO.addCommentOnProduct(email, comment, id, user_name);
         Product product = productDAO.findById(id);
         modelAndView.addObject("product", product);
 
@@ -166,6 +168,7 @@ public class ProductController {
             logged = true;
         }
         modelAndView.addObject("logged", logged);
+        double totalPrice = 0;
 
         for (Map.Entry<Integer, Integer> entry : userSession.getShoppingCart().entrySet()) {
             int productId = entry.getKey();
@@ -179,7 +182,10 @@ public class ProductController {
             cartProduct.setPhoto3(productFromDatabase.getPhoto3());
             cartProduct.setPrice(productFromDatabase.getPrice() * quantity);
             productsFromCart.add(cartProduct);
+            totalPrice = totalPrice + cartProduct.getPrice();
+
         }
+        modelAndView.addObject("totalPrice", totalPrice);
 
         modelAndView.addObject("products", productsFromCart);
         return modelAndView;
