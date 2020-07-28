@@ -90,7 +90,7 @@ public class AdminController {
 
     @GetMapping("/admin/edit")
     public ModelAndView edit(@RequestParam("id") Integer productId) {
-        ModelAndView modelAndView = new ModelAndView("redirect:edit-product");
+        ModelAndView modelAndView = new ModelAndView("edit");
         Product product = productDAO.findById(productId);
         modelAndView.addObject("product", product);
 

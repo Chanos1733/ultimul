@@ -107,7 +107,7 @@
             </div>
 
 
-            <form action="admin/edit" th:object="${product}">
+            <form action="admin/edit-product" th:object="${product}">
                 <div class="form-group">
                     <label for="name">Nume</label>
                     <input type="text" class="form-control" id="name" th:text="${product.name}">
@@ -155,9 +155,7 @@
                         <input type="text" class="form-control" id="photo3Product" th:text="${product.photo3}">
                     </div>
                 </div>
-                <form action="/admin/edit-product">
                 <button type="button" class="btn " >Salveaza</button>
-                </form>
             </form>
 
         </div>
