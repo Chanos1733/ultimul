@@ -20,7 +20,7 @@
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
     <!-- CHANOS ART icon -->
-    <link href="/Doar-flori-pagina-sus.png" rel="icon" type="image/x-icon">
+    <link rel="icon" href="../../img/Imagini/Doar-flori-pagina-sus.png" type="image/x-icon">
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
@@ -107,57 +107,67 @@
             </div>
 
 
-            <form action="admin/edit" th:object="${product}">
+            <form action="edit-product">
+                <input name="id" th:value="${product.id}" hidden>
                 <div class="form-group">
                     <label for="name">Nume</label>
-                    <input type="text" class="form-control" id="name" th:text="${product.name}">
+                    <input th:value="${product.name}" hidden>
+                    <input type="text" class="form-control" id="name" th:placeholder="${product.name}">
                 </div>
                 <div style="width: 48%; float: left;">
                     <div class="form-group">
                         <label for="priceProduct">Pret</label>
-                        <input type="number" class="form-control" id="priceProduct" th:text="${product.price}">
+                        <input th:value="${product.price}" hidden>
+                        <input type="text" class="form-control" id="priceProduct" th:placeholder="${product.price}">
                     </div>
 
                     <div class="form-group">
                         <label for="materialsProduct">Materiale</label>
-                        <input type="text" class="form-control" id="materialsProduct" th:text="${product.materials}">
+                        <input th:value="${product.materials}" hidden>
+                        <input type="text" class="form-control" id="materialsProduct" th:placeholder="${product.materials}">
                     </div>
 
                     <div class="form-group">
                         <label for="dimensionsProduct">Dimensiuni</label>
-                        <input type="text" class="form-control" id="dimensionsProduct" th:text="${product.dimensions}">
+                        <input th:value="${product.dimensions}" hidden>
+                        <input type="text" class="form-control" id="dimensionsProduct" th:placeholder="${product.dimensions}">
                     </div>
 
                     <div class="form-group">
                         <label for="colorProduct">Culoare</label>
-                        <input type="text" class="form-control" id="colorProduct" th:text="${product.color}">
+                        <input th:value="${product.color}" hidden>
+                        <input type="text" class="form-control" id="colorProduct" th:placeholder="${product.color}">
                     </div>
                 </div>
                 <div style="width: 4%; float: left;"><p></p></div>
                 <div style="width: 48%; float: left;">
                     <div class="form-group">
                         <label for="descriptionProduct">Descriere</label>
-                        <input type="text" class="form-control" id="descriptionProduct" th:text="${product.description}">
+                        <input th:value="${product.description}" hidden>
+                        <input type="text" class="form-control" id="descriptionProduct" th:placeholder="${product.description}">
                     </div>
 
                     <div class="form-group">
                         <label for="photo1Product">Poza 1</label>
-                        <input type="text" class="form-control" id="photo1Product" th:text="${product.photo1}">
+                        <input th:value="${product.photo1}" hidden>
+                        <input type="text" class="form-control" id="photo1Product" th:placeholder="${product.photo1}">
                     </div>
 
                     <div class="form-group">
                         <label for="photo2Product">Poza 2</label>
-                        <input type="text" class="form-control" id="photo2Product" th:text="${product.photo2}">
+                        <input th:value="${product.photo2}" hidden>
+                        <input type="text" class="form-control" id="photo2Product" th:placeholder="${product.photo2}">
                     </div>
 
                     <div class="form-group">
                         <label for="photo3Product">Poza 3</label>
-                        <input type="text" class="form-control" id="photo3Product" th:text="${product.photo3}">
+                        <input th:value="${product.photo3}" hidden>
+                        <input type="text" class="form-control" id="photo3Product" th:placeholder="${product.photo3}">
                     </div>
                 </div>
-                <form action="/admin/edit-product">
-                <button type="button" class="btn " >Salveaza</button>
-                </form>
+
+                <button type="submit" class="btn " >Salveaza</button>
+
             </form>
 
         </div>

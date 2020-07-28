@@ -110,10 +110,9 @@ public class AdminController {
                                     @RequestParam(value = "photo3") String photo3
     ) {
         ModelAndView modelAndView = new ModelAndView("admin/edit-product");
+        productService.editProduct(productId, name, price, materials, dimensions, color, description, photo1, photo2, photo3);
         Product product = productDAO.findById(productId);
         modelAndView.addObject("product", product);
-
-        productService.editProduct(productId, name, price, materials, dimensions, color, description, photo1, photo2, photo3);
         return modelAndView;
     }
 
