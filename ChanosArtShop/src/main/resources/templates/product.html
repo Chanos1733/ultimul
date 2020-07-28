@@ -141,6 +141,7 @@
                     <input name="productId" hidden th:value="${product.id}">
                     <h4 style="color: #80002f;" th:if="${!logged}"> Nu puteti posta un comentariu daca nu sunteti
                         logat!</h4><br>
+                    <h4 style="color: #80002f;" th:text="${messageComment}"></h4><br>
                     <input class="form-control" type="text" size="20" placeholder="scrie comentariul aici (500)"
                            style="width: 80%; height: 100px; float: left; background-color: #A0E0FF" name="comment" th:value="${comment}">
                     <a th:if="${logged}" href="add-comment">
@@ -155,7 +156,7 @@
                  style="width: 50%;float: left; height: 200px; position: relative; overflow-y: scroll; background-color: #a0e0ff; border-radius: 10px;">
 
                 <div th:each="x : ${comments}">
-                    <h4>Userul: &nbsp;<span th:text="${x.user_name}"></span></h4>
+                    <h4><span th:text="${x.user_name}"></span></h4>
                     <p>data: <span th:text="${x.date}"></span></p>
                     <h5 th:text="${x.comment}"></h5>
                     <hr class="featurette-divider">
