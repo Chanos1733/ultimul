@@ -57,9 +57,9 @@ public class UserSession {
         }
     }
 
+    public void updateQuantity(Integer id,Integer quantity) {
+            shoppingCart.put(id, quantity);
 
-
-
-//    public void addComment
+    }
 
 }

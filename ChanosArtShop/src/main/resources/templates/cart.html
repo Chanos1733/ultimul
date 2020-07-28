@@ -84,8 +84,9 @@
                                 style="font-size: x-large;" th:text="${x.name}"></span>
                         </li>
                         <form action="/update-cart" method="get">
+                            <input name="id" th:value="${x.id}" hidden>
                             <input class="item-quantity qty k-valid" type="number" style="width: 50px;" name="quantity"
-                                   th:value="${x.quantity}"  id="itemTotal">&nbsp;
+                                   th:value="${x.quantity}" >&nbsp;
                             <button>Actualizează</button>
                         </form>
                     </ul>

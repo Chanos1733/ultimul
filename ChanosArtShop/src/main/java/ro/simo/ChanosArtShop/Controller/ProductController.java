@@ -160,7 +160,8 @@ public class ProductController {
     }
 
     @GetMapping("/update-cart")
-    public ModelAndView updateCart(@RequestParam(value = "quantity", required = false) Integer quantity) {
+    public ModelAndView updateCart(@RequestParam(value = "quantity", required = false) Integer quantity,
+                                   @RequestParam("id") Integer id) {
         ModelAndView modelAndView = new ModelAndView("cart");
         List<CartProduct> productsFromCart = new ArrayList<>();
         boolean logged = false;
@@ -169,7 +170,7 @@ public class ProductController {
         }
         modelAndView.addObject("logged", logged);
         double totalPrice = 0;
-
+        userSession.updateQuantity(id, quantity);
         for (Map.Entry<Integer, Integer> entry : userSession.getShoppingCart().entrySet()) {
             int productId = entry.getKey();
             Product productFromDatabase = productDAO.findById(productId);
