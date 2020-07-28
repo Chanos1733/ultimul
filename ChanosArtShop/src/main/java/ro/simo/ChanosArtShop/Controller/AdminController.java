@@ -90,7 +90,7 @@ public class AdminController {
 
     @GetMapping("/admin/edit")
     public ModelAndView edit(@RequestParam("id") Integer productId) {
-        ModelAndView modelAndView = new ModelAndView("edit");
+        ModelAndView modelAndView = new ModelAndView("admin/edit");
         Product product = productDAO.findById(productId);
         modelAndView.addObject("product", product);
 
@@ -109,7 +109,7 @@ public class AdminController {
                                     @RequestParam(value = "photo2") String photo2,
                                     @RequestParam(value = "photo3") String photo3
     ) {
-        ModelAndView modelAndView = new ModelAndView("edit-product");
+        ModelAndView modelAndView = new ModelAndView("admin/edit-product");
         Product product = productDAO.findById(productId);
         modelAndView.addObject("product", product);
 
