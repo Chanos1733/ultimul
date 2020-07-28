@@ -230,15 +230,14 @@
                     <td>
                         <form action="/admin/details">
                             <input name="id" th:value="${p.id}" hidden>
-                            <button type="submit" class="btn btn-outline-primary" id="detailsButton">Detalii
+                            <button type="submit" class="btn btn-outline-primary">Detalii
                             </button>
                         </form>
                     </td>
                     <td>
-                        <form action="/admin/edit" method="get">
+                        <form action="/admin/edit" >
                             <input name="id" th:value="${p.id}" hidden>
-                            <button type="submit" class="btn btn-outline-warning">
-                                <!--th:id="${p.id}"  onclick="sendEditProductRequest();"-->Editare
+                            <button type="submit" class="btn btn-outline-warning">Editare
                             </button>
                         </form>
                     </td>

@@ -10,10 +10,18 @@ import java.util.HashMap;
 public class UserSession {
     private int userId;
     private String userEmail;
+    private String name;
 
 
     HashMap<Integer, Integer> shoppingCart = new HashMap<>();
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public int getUserId() {
         return userId;

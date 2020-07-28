@@ -107,10 +107,10 @@
             </div>
 
 
-            <form id="form-add" >
+            <form action="admin/edit-product" th:object="${product}">
                 <div class="form-group">
-                    <label for="nameProduct">Nume</label>
-                    <input type="text" class="form-control" id="nameProduct" th:text="${product.name}">
+                    <label for="name">Nume</label>
+                    <input type="text" class="form-control" id="name" th:text="${product.name}">
                 </div>
                 <div style="width: 48%; float: left;">
                     <div class="form-group">

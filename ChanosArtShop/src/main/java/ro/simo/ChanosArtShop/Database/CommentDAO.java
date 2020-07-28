@@ -17,27 +17,15 @@ public class CommentDAO {
         return jdbcTemplate.query("select * from comments where id_product =" + id_product + " order by id desc", new CommentRowMapper());
     }
 
-//    public List<Integer> getUserIdForComment(Integer id_product) {
-//        List<Integer> userId = jdbcTemplate.queryForObject("select id_user from comments where id_product = " + id_product,List.class);
-//        return userId;
-//    }
-//
-//    public List<String> getUserNameForComment(List userId) {
-//        List<String> userNames = null;
-//       for ( int i=0; i>userId.size() ; i++) {
-//           String userNameCForCommentFromDatabase = jdbcTemplate.queryForObject("select name from user where id = " + i, String.class);
-//           userNames.add(userNameCForCommentFromDatabase);
-//       }
-//       return userNames;
-//    }
-
-    public void addCommentOnProduct(String email, String comment, Integer id_product) {
+    public void addCommentOnProduct(String email, String comment, Integer id_product, String user_name) {
 
         Integer id_user = jdbcTemplate.queryForObject("select id from user where email='" + email + "';", Integer.class);
         LocalDateTime dateTime = LocalDateTime.now();
         String date = dateTime.getYear() + " " + dateTime.getMonth() + " " + dateTime.getDayOfMonth() + " ~ " + dateTime.getHour() + ":" + dateTime.getMinute();
-        jdbcTemplate.update("INSERT INTO comments (id, id_product, id_user, date, comment) VALUES (null, ?,?,?,?)",
-                id_product, id_user, date, comment
+        user_name = jdbcTemplate.queryForObject("select name from user where id = '" + id_user + "';", String.class);
+        jdbcTemplate.update("INSERT INTO comments (id, id_product, id_user, date, comment,user_name) VALUES (null, ?,?,?,?,?)",
+                id_product, id_user, date, comment,user_name
         );
+
     }
 }

@@ -88,28 +88,33 @@ public class AdminController {
         return new ModelAndView("redirect:/index.html");
     }
 
-    @GetMapping("admin/edit")
-    public ModelAndView edit(@RequestParam ("id") Integer productId) {
-        return new ModelAndView("admin/edit-product");
+    @GetMapping("/admin/edit")
+    public ModelAndView edit(@RequestParam("id") Integer productId) {
+        ModelAndView modelAndView = new ModelAndView("redirect:edit-product");
+        Product product = productDAO.findById(productId);
+        modelAndView.addObject("product", product);
+
+        return modelAndView;
     }
 
-    @GetMapping("/admin/edit-product")
-    public ModelAndView editProduct(@RequestParam(value = "name") String name,
-                              @RequestParam(value = "price" ) double price,
-                              @RequestParam(value = "materials") String materials,
-                              @RequestParam(value = "dimensions") String dimensions,
-                              @RequestParam(value = "color") String color,
-                              @RequestParam(value = "description") String description,
-                              @RequestParam(value = "photo1") String photo1,
-                              @RequestParam(value = "photo2") String photo2,
-                              @RequestParam(value = "photo3") String photo3,
-                              @RequestParam(value = "id") Integer productId) {
-        ModelAndView modelAndView = new ModelAndView("admin/edit-product");
+    @GetMapping("admin/edit-product")
+    public ModelAndView editProduct(@RequestParam(value = "id") Integer productId,
+                                    @RequestParam(value = "name") String name,
+                                    @RequestParam(value = "price") double price,
+                                    @RequestParam(value = "materials") String materials,
+                                    @RequestParam(value = "dimensions") String dimensions,
+                                    @RequestParam(value = "color") String color,
+                                    @RequestParam(value = "description") String description,
+                                    @RequestParam(value = "photo1") String photo1,
+                                    @RequestParam(value = "photo2") String photo2,
+                                    @RequestParam(value = "photo3") String photo3
+    ) {
+        ModelAndView modelAndView = new ModelAndView("edit-product");
         Product product = productDAO.findById(productId);
         modelAndView.addObject("product", product);
 
         productService.editProduct(productId, name, price, materials, dimensions, color, description, photo1, photo2, photo3);
-        return new ModelAndView("admin/products");
+        return modelAndView;
     }
 
 

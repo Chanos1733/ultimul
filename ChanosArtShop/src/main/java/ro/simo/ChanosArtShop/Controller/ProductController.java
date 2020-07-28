@@ -56,7 +56,6 @@ public class ProductController {
         modelAndView.addObject("shoppingCartSize", productCounter);
         modelAndView.addObject("product", product);
         modelAndView.addObject("logged", logged);
-        modelAndView.addObject("mesaj", false);
 
         return modelAndView;
     }
@@ -124,7 +123,7 @@ public class ProductController {
             Product product = productDAO.findById(entry.getKey());
             totalPrice = totalPrice + (product.getPrice() * entry.getValue());
         }
-        modelAndView.addObject("totalPrice",totalPrice);
+        modelAndView.addObject("totalPrice", totalPrice);
         boolean logged = false;
 
         if (userSession.getUserId() == 0) {
@@ -139,8 +138,7 @@ public class ProductController {
     }
 
     @GetMapping("/add-comment")
-    public ModelAndView addCommentOnProduct(@RequestParam(value = "email") String email,
-                                            @RequestParam(value = "comment") String comment,
+    public ModelAndView addCommentOnProduct(@RequestParam(value = "comment") String comment,
                                             @RequestParam(value = "productId") Integer id) {
         ModelAndView modelAndView = new ModelAndView("redirect:product?id=" + id);
 
@@ -150,17 +148,11 @@ public class ProductController {
         }
         modelAndView.addObject("logged", logged);
 
-        boolean mesaj;
-        if (!email.equals(userSession.getUserEmail())) {
-            mesaj = false;
-        } else {
-            mesaj = true;
-            commentDAO.addCommentOnProduct(email, comment, id);
-        }
-//
+        String email = userSession.getUserEmail();
+        String user_name = userSession.getName();
+        commentDAO.addCommentOnProduct(email, comment, id,user_name);
         Product product = productDAO.findById(id);
         modelAndView.addObject("product", product);
-        modelAndView.addObject("mesaj", mesaj);
 
         return modelAndView;
     }
