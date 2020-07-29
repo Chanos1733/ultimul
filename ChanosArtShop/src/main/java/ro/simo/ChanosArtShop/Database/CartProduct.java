@@ -1,6 +1,4 @@
-package ro.simo.ChanosArtShop.Controller;
-
-import ro.simo.ChanosArtShop.Database.Product;
+package ro.simo.ChanosArtShop.Database;
 
 public class CartProduct extends Product {
 

@@ -79,6 +79,7 @@ public class AdminController {
                               @RequestParam("photo2") String photo2,
                               @RequestParam("photo3") String photo3) {
         return productService.saveProduct(name, price, materials, dimensions, color, description, photo1, photo2, photo3);
+
     }
 
     @GetMapping("admin/logout")
@@ -90,14 +91,14 @@ public class AdminController {
 
     @GetMapping("/admin/edit")
     public ModelAndView edit(@RequestParam("id") Integer productId) {
-        ModelAndView modelAndView = new ModelAndView("admin/edit");
+        ModelAndView modelAndView = new ModelAndView("admin/edit-product");
         Product product = productDAO.findById(productId);
         modelAndView.addObject("product", product);
 
         return modelAndView;
     }
 
-    @GetMapping("admin/edit-product")
+    @GetMapping("/admin/edit-product")
     public ModelAndView editProduct(@RequestParam(value = "id") Integer productId,
                                     @RequestParam(value = "name") String name,
                                     @RequestParam(value = "price") double price,
@@ -107,12 +108,11 @@ public class AdminController {
                                     @RequestParam(value = "description") String description,
                                     @RequestParam(value = "photo1") String photo1,
                                     @RequestParam(value = "photo2") String photo2,
-                                    @RequestParam(value = "photo3") String photo3
-    ) {
-        ModelAndView modelAndView = new ModelAndView("admin/edit-product");
+                                    @RequestParam(value = "photo3") String photo3) {
+        ModelAndView modelAndView = new ModelAndView("redirect:products");
         productService.editProduct(productId, name, price, materials, dimensions, color, description, photo1, photo2, photo3);
-        Product product = productDAO.findById(productId);
-        modelAndView.addObject("product", product);
+        List<Product> products = productDAO.findByPage(1);
+        modelAndView.addObject("products", products);
         return modelAndView;
     }
 

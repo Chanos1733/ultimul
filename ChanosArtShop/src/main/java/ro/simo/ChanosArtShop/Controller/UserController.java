@@ -38,7 +38,7 @@ public class UserController {
     //parolele sunt identice?
     //emailul este deja in baza de date?
     //stochez in baza de date un nou utilizator
-    @GetMapping("/register-form")
+    @PostMapping("/register-form")
     public ModelAndView registerAction(@RequestParam("name") String name,
                                        @RequestParam("country") String country,
                                        @RequestParam("city") String city,
@@ -49,7 +49,6 @@ public class UserController {
                                        @RequestParam("password-again") String password2) {
         ModelAndView modelAndView = new ModelAndView("register");
 
-        List<User> userList = userService.findByEmail(email);
         if (!password.equals(password2)) {
             modelAndView.addObject("message", "Parolele nu sunt identice!");
             return modelAndView;

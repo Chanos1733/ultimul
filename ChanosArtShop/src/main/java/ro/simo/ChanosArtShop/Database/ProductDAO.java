@@ -42,16 +42,16 @@ public class ProductDAO {
 
     public void editProduct(Integer id, String name, double price, String materials, String dimensions, String color, String description, String photo1, String photo2,
                             String photo3) {
-        jdbcTemplate.update("update ChanosArtShop.product name=" + name +
-                ", price=" + price +
-                ",  materials=" + materials +
-                ", dimensions=" + dimensions +
-                ", color=" + color +
-                ", description=" + description +
-                ", photo1=" + photo1 +
-                ", photo2=" + photo2 +
-                ", photo3=" + photo3 +
-                "where id=" + id
+        jdbcTemplate.update("update ChanosArtShop.product set name= '" + name +
+                "', price=" + price +
+                ", materials= '" + materials +
+                "', dimensions= '" + dimensions +
+                "', color= '" + color +
+                "', description= '" + description +
+                "', photo1= '" + photo1 +
+                "', photo2= '" + photo2 +
+                "', photo3= '" + photo3 +
+                "' where id=" + id +";"
         );
     }
 }

@@ -33,7 +33,7 @@
 <body class="text-center"
       style=" font-family: 'Patrick Hand', cursive;  background-image: linear-gradient(#184530 25%, #49ab6b 100%); height: -web-max-fit;background-repeat: no-repeat;">
 <div>
-    <form action="/register-form" method="get" class="form-signin"
+    <form action="/register-form" method="post" class="form-signin"
           style="width: 800px; margin: auto; height: 70vh; padding-top: 5%;">
         <div class="card-body" style="background-color: #a6e6b6; border-radius: 10px;">
             <div class="flex-center flex-column">
@@ -99,7 +99,7 @@
                 </div>
 
 
-                <p th:text="${message}" style="color: #c50013;"></p> <!--email invalid sau nu e de acord cu termenii-->
+                <p th:text="${message}" style="color: #c50013;"></p>
 
                 <button type="submit" class="btn btn-dark"
                         style="border-radius: 15px; font-size: 14px; float: left;width: -web-max-fit;">

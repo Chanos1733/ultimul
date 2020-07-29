@@ -111,58 +111,49 @@
                 <input name="id" th:value="${product.id}" hidden>
                 <div class="form-group">
                     <label for="name">Nume</label>
-                    <input th:value="${product.name}" hidden>
-                    <input type="text" class="form-control" id="name" th:placeholder="${product.name}">
+                    <input type="text" class="form-control" id="name" name="name" th:value="${product.name}" >
                 </div>
                 <div style="width: 48%; float: left;">
                     <div class="form-group">
                         <label for="priceProduct">Pret</label>
-                        <input th:value="${product.price}" hidden>
-                        <input type="text" class="form-control" id="priceProduct" th:placeholder="${product.price}">
+                        <input type="text" class="form-control" id="priceProduct" name="price" th:value="${product.price}">
                     </div>
 
                     <div class="form-group">
                         <label for="materialsProduct">Materiale</label>
-                        <input th:value="${product.materials}" hidden>
-                        <input type="text" class="form-control" id="materialsProduct" th:placeholder="${product.materials}">
+                        <input type="text" class="form-control" id="materialsProduct" name="materials" th:value="${product.materials}">
                     </div>
 
                     <div class="form-group">
                         <label for="dimensionsProduct">Dimensiuni</label>
-                        <input th:value="${product.dimensions}" hidden>
-                        <input type="text" class="form-control" id="dimensionsProduct" th:placeholder="${product.dimensions}">
+                        <input type="text" class="form-control" id="dimensionsProduct" name="dimensions" th:value="${product.dimensions}">
                     </div>
 
                     <div class="form-group">
                         <label for="colorProduct">Culoare</label>
-                        <input th:value="${product.color}" hidden>
-                        <input type="text" class="form-control" id="colorProduct" th:placeholder="${product.color}">
+                        <input type="text" class="form-control" id="colorProduct" name="color" th:value="${product.color}">
                     </div>
                 </div>
                 <div style="width: 4%; float: left;"><p></p></div>
                 <div style="width: 48%; float: left;">
                     <div class="form-group">
                         <label for="descriptionProduct">Descriere</label>
-                        <input th:value="${product.description}" hidden>
-                        <input type="text" class="form-control" id="descriptionProduct" th:placeholder="${product.description}">
+                        <input type="text" class="form-control" id="descriptionProduct" name="description" th:value="${product.description}">
                     </div>
 
                     <div class="form-group">
                         <label for="photo1Product">Poza 1</label>
-                        <input th:value="${product.photo1}" hidden>
-                        <input type="text" class="form-control" id="photo1Product" th:placeholder="${product.photo1}">
+                        <input type="text" class="form-control" id="photo1Product" name="photo1" th:value="${product.photo1}">
                     </div>
 
                     <div class="form-group">
                         <label for="photo2Product">Poza 2</label>
-                        <input th:value="${product.photo2}" hidden>
-                        <input type="text" class="form-control" id="photo2Product" th:placeholder="${product.photo2}">
+                        <input type="text" class="form-control" id="photo2Product" name="photo2" th:value="${product.photo2}">
                     </div>
 
                     <div class="form-group">
                         <label for="photo3Product">Poza 3</label>
-                        <input th:value="${product.photo3}" hidden>
-                        <input type="text" class="form-control" id="photo3Product" th:placeholder="${product.photo3}">
+                        <input type="text" class="form-control" id="photo3Product" name="photo3" th:value="${product.photo3}">
                     </div>
                 </div>
 

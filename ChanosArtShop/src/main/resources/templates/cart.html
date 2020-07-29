@@ -72,9 +72,9 @@
 
             <div th:each="x : ${products}" class="card mb-4 shadow-sm" style=" border-radius: 10px;">
 
-                <div class="card-header" style="background-color: burlywood;">
+                <div class="card-header" style="background-color: burlywood; border-radius: 4px;">
                     <h1 class="card-title pricing-card-title">Prețul: <span
-                            th:text="${x.price}"></span> RON</h1>
+                            th:text="${#numbers.formatDecimal(x.price, 0, 'COMMA', 2, 'POINT')}"></span> RON</h1>
                 </div>
                 <div class="card-body">
                     <ul class="list-group list-group-flush">
@@ -87,7 +87,7 @@
                             <input name="id" th:value="${x.id}" hidden>
                             <input class="item-quantity qty k-valid" type="number" style="width: 50px;" name="quantity"
                                    th:value="${x.quantity}" >&nbsp;
-                            <button>Actualizează</button>
+                            <button type="submit" class="btn btn-dark" style="border-radius: 9px; background-color: #efcfa6; font-size: 10px;">Actualizează</button>
                         </form>
                     </ul>
                 </div>
@@ -95,7 +95,7 @@
 
         </div>
         <div>
-            <h1> Pret total: <span th:text="${totalPrice}"></span></h1><!---->
+            <h1> Pret total: <span th:text="${#numbers.formatDecimal(totalPrice, 0, 'COMMA', 2, 'POINT')}"></span></h1><!---->
         </div>
         <a href="/save-cart">
             <button class="btn btn-dark" style="font-size: 17px; border-radius: 15px;">Trimite comanda</button>

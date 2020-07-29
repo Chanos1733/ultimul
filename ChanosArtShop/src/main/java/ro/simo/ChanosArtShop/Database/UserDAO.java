@@ -16,9 +16,7 @@ public class UserDAO {
     public List<User> findByEmail(String email) {
         return jdbcTemplate.query("select * from user where email='" + email + "';", new UserRowMapper());
     }
-    public List<User> findByName(String name) {
-        return jdbcTemplate.query("select * from user where name='" + name + "';", new UserRowMapper());
-    }
+
     public List<String> findNameInCommentsByProductId(Integer id) {//id al produsului curent
         while(true) {
         return jdbcTemplate.queryForObject("select name from user where id=(select user_id from comments where id_product=" + id + ";", List.class);
